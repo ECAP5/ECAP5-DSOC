@@ -21,6 +21,40 @@
  */
 
 module tb_ecap5_dsoc (
+  input logic  clk_i,
+  input logic  rst_i,
+
+//=================================
+  //    UART interface
+  
+  output logic uart_tx_o,
+  input  logic uart_rx_i,
+  
+  //=================================
+  //    LEDs interface
+
+  output logic led0_o,
+  output logic led1_o,
+
+  //=================================
+  //    Buttons interface
+
+  input logic button0_i,
+  input logic button1_i
 );
 
-endmodule // ecap5_dsoc
+ecap5_dsoc dut (
+  .clk_i (clk_i),
+  .rst_i (rst_i),
+
+  .uart_tx_o (uart_tx_o),
+  .uart_rx_i (uart_rx_i),
+
+  .led0_o (led0_o),
+  .led1_o (led1_o),
+
+  .button0_i (button0_i),
+  .button1_i (button1_i)
+);
+
+endmodule // tb_ecap5_dsoc
