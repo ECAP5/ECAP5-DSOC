@@ -1,0 +1,592 @@
+# Configuration
+
+#SYSCONFIG CONFIG_IOVOLTAGE=3.3 COMPRESS_CONFIG=ON MCCLK_FREQ=62 SLAVE_SPI_PORT=DISABLE MASTER_SPI_PORT=ENABLE SLAVE_PARALLEL_PORT=DISABLE;
+
+# Oscillator input
+
+# LOCATE COMP    "clk_i" SITE "P5";
+#
+# PORT           "clk_i" IO_TYPE=LVCMOS33;
+# FREQUENCY PORT "clk_i" 24 MHZ;
+
+# Power monitoring - SPI
+
+# LOCATE COMP "pmon_sda"   SITE "C32";
+# LOCATE COMP "pmon_scl"   SITE "D32";
+#
+# PORT        "pmon_sda" IO_TYPE=LVCMOS25;
+# PORT        "pmon_scl" IO_TYPE=LVCMOS25;
+
+# Flash
+
+# LOCATE COMP "flash_cs_n"  SITE "AJ3";
+# The flash clk is accessed through a custom primitive
+# LOCATE COMP "flash_io[0]" SITE "AK2";
+# LOCATE COMP "flash_io[1]" SITE "AJ2";
+# LOCATE COMP "flash_io[2]" SITE "AM2";
+# LOCATE COMP "flash_io[3]" SITE "AL1";
+#
+# PORT        "flash_cs_n"  IO_TYPE=LVCMOS33;
+# PORT        "flash_io[0]" IO_TYPE=LVCMOS33;
+# PORT        "flash_io[1]" IO_TYPE=LVCMOS33;
+# PORT        "flash_io[2]" IO_TYPE=LVCMOS33;
+# PORT        "flash_io[3]" IO_TYPE=LVCMOS33;
+
+# SRAM - Address signals
+
+# LOCATE COMP "sram_a[0]"   SITE "F20";
+# LOCATE COMP "sram_a[1]"   SITE "A29";
+# LOCATE COMP "sram_a[2]"   SITE "A31";
+# LOCATE COMP "sram_a[3]"   SITE "C24";
+# LOCATE COMP "sram_a[4]"   SITE "F25";
+# LOCATE COMP "sram_a[5]"   SITE "D25";
+# LOCATE COMP "sram_a[6]"   SITE "E25";
+# LOCATE COMP "sram_a[7]"   SITE "B25";
+# LOCATE COMP "sram_a[8]"   SITE "A20";
+# LOCATE COMP "sram_a[9]"   SITE "A22";
+# LOCATE COMP "sram_a[10]"  SITE "A23";
+# LOCATE COMP "sram_a[11]"  SITE "A24";
+# LOCATE COMP "sram_a[12]"  SITE "E23";
+# LOCATE COMP "sram_a[13]"  SITE "F23";
+# LOCATE COMP "sram_a[14]"  SITE "D23";
+# LOCATE COMP "sram_a[15]"  SITE "F22";
+# LOCATE COMP "sram_a[16]"  SITE "D22";
+# LOCATE COMP "sram_a[17]"  SITE "C25";
+#
+# PORT        "sram_a[0]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[1]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[2]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[3]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[4]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[5]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[6]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[7]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[8]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[9]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_a[10]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[11]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[12]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[13]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[14]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[15]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[16]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_a[17]"  IO_TYPE=LVCMOS33;
+
+# SRAM - Control signals
+
+# LOCATE COMP "sram_ce_n"  SITE "A28";
+# LOCATE COMP "sram_oe_n"  SITE "C20";
+# LOCATE COMP "sram_lb_n"  SITE "D20";
+# LOCATE COMP "sram_ub_n"  SITE "C22";
+# LOCATE COMP "sram_we_n"  SITE "F24";
+#
+# PORT        "sram_ce_n"  IO_TYPE=LVCMOS33;
+# PORT        "sram_oe_n"  IO_TYPE=LVCMOS33;
+# PORT        "sram_lb_n"  IO_TYPE=LVCMOS33;
+# PORT        "sram_ub_n"  IO_TYPE=LVCMOS33;
+# PORT        "sram_we_n"  IO_TYPE=LVCMOS33;
+
+# SRAM - IO signals
+
+# LOCATE COMP "sram_io[0]"   SITE "A30";
+# LOCATE COMP "sram_io[1]"   SITE "C26";
+# LOCATE COMP "sram_io[2]"   SITE "D26";
+# LOCATE COMP "sram_io[3]"   SITE "B26";
+# LOCATE COMP "sram_io[4]"   SITE "B30";
+# LOCATE COMP "sram_io[5]"   SITE "B29";
+# LOCATE COMP "sram_io[6]"   SITE "A26";
+# LOCATE COMP "sram_io[7]"   SITE "A25";
+# LOCATE COMP "sram_io[8]"   SITE "B22";
+# LOCATE COMP "sram_io[9]"   SITE "B23";
+# LOCATE COMP "sram_io[10]"  SITE "D24";
+# LOCATE COMP "sram_io[11]"  SITE "C23";
+# LOCATE COMP "sram_io[12]"  SITE "E22";
+# LOCATE COMP "sram_io[13]"  SITE "F19";
+# LOCATE COMP "sram_io[14]"  SITE "E17";
+# LOCATE COMP "sram_io[15]"  SITE "F18";
+#
+# PORT        "sram_io[0]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[1]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[2]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[3]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[4]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[5]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[6]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[7]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[8]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[9]"   IO_TYPE=LVCMOS33;
+# PORT        "sram_io[10]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_io[11]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_io[12]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_io[13]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_io[14]"  IO_TYPE=LVCMOS33;
+# PORT        "sram_io[15]"  IO_TYPE=LVCMOS33;
+
+# SDRAM - Address signals
+
+# LOCATE COMP "sdram_a[0]"  SITE "E14";
+# LOCATE COMP "sdram_a[1]"  SITE "F11";
+# LOCATE COMP "sdram_a[2]"  SITE "E11";
+# LOCATE COMP "sdram_a[3]"  SITE "D11";
+# LOCATE COMP "sdram_a[4]"  SITE "D13";
+# LOCATE COMP "sdram_a[5]"  SITE "B11";
+# LOCATE COMP "sdram_a[6]"  SITE "D14";
+# LOCATE COMP "sdram_a[7]"  SITE "C13";
+# LOCATE COMP "sdram_a[8]"  SITE "C11";
+# LOCATE COMP "sdram_a[9]"  SITE "B14";
+# LOCATE COMP "sdram_a[10]" SITE "F13";
+# LOCATE COMP "sdram_a[11]" SITE "C14";
+# LOCATE COMP "sdram_a[12]" SITE "C15";
+
+# LOCATE COMP "sdram_ba0"   SITE "F14";
+# LOCATE COMP "sdram_ba1"   SITE "D15";
+
+# PORT        "sdram_a[0]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[1]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[2]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[3]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[4]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[5]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[6]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[7]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[8]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[9]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[10]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[11]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_a[12]" IO_TYPE=LVCMOS33;
+
+# PORT        "sdram_ba0"   IO_TYPE=LVCMOS33;
+# PORT        "sdram_ba1"   IO_TYPE=LVCMOS33;
+
+# SDRAM0 - Control signals
+
+# LOCATE COMP "sdram0_cs_n"  SITE "B3";
+# LOCATE COMP "sdram0_we_n"  SITE "B4";
+# LOCATE COMP "sdram0_cke"   SITE "A2";
+# LOCATE COMP "sdram0_cas_n" SITE "A3";
+# LOCATE COMP "sdram0_ras_n" SITE "A4";
+# LOCATE COMP "sdram0_dqml"  SITE "A5";
+# LOCATE COMP "sdram0_dqmh"  SITE "A8";
+#
+# PORT        "sdram0_cs_n"  IO_TYPE=LVCMOS33;
+# PORT        "sdram0_we_n"  IO_TYPE=LVCMOS33;
+# PORT        "sdram0_cke"   IO_TYPE=LVCMOS33;
+# PORT        "sdram0_cas_n" IO_TYPE=LVCMOS33;
+# PORT        "sdram0_ras_n" IO_TYPE=LVCMOS33;
+# PORT        "sdram0_dqml"  IO_TYPE=LVCMOS33;
+# PORT        "sdram0_dqmh"  IO_TYPE=LVCMOS33;
+
+# SDRAM0 - Data signals
+
+# LOCATE COMP "sdram_dq[0]"  SITE "F10";
+# LOCATE COMP "sdram_dq[1]"  SITE "D10";
+# LOCATE COMP "sdram_dq[2]"  SITE "E10";
+# LOCATE COMP "sdram_dq[3]"  SITE "D8";
+# LOCATE COMP "sdram_dq[4]"  SITE "D7";
+# LOCATE COMP "sdram_dq[5]"  SITE "E8";
+# LOCATE COMP "sdram_dq[6]"  SITE "F9";
+# LOCATE COMP "sdram_dq[7]"  SITE "F8";
+# LOCATE COMP "sdram_dq[8]"  SITE "D9";
+# LOCATE COMP "sdram_dq[9]"  SITE "C7";
+# LOCATE COMP "sdram_dq[10]" SITE "C8";
+# LOCATE COMP "sdram_dq[11]" SITE "C9";
+# LOCATE COMP "sdram_dq[12]" SITE "B10";
+# LOCATE COMP "sdram_dq[13]" SITE "B7";
+# LOCATE COMP "sdram_dq[14]" SITE "C10";
+# LOCATE COMP "sdram_dq[15]" SITE "B8";
+#
+# PORT        "sdram_dq[0]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[1]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[2]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[3]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[4]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[5]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[6]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[7]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[8]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[9]"  IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[10]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[11]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[12]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[13]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[14]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[15]" IO_TYPE=LVCMOS33;
+
+# SDRAM1 - Control signals
+
+# LOCATE COMP "sdram1_cs_n"  SITE "A10";
+# LOCATE COMP "sdram1_we_n"  SITE "A13";
+# LOCATE COMP "sdram1_cke"   SITE "A9";
+# LOCATE COMP "sdram1_cas_n" SITE "A11";
+# LOCATE COMP "sdram1_ras_n" SITE "A14";
+# LOCATE COMP "sdram1_dqml"  SITE "A15";
+# LOCATE COMP "sdram1_dqmh"  SITE "A16";
+#
+# PORT        "sdram1_cs_n"  IO_TYPE=LVCMOS33;
+# PORT        "sdram1_we_n"  IO_TYPE=LVCMOS33;
+# PORT        "sdram1_cke"   IO_TYPE=LVCMOS33;
+# PORT        "sdram1_cas_n" IO_TYPE=LVCMOS33;
+# PORT        "sdram1_ras_n" IO_TYPE=LVCMOS33;
+# PORT        "sdram1_dqml"  IO_TYPE=LVCMOS33;
+# PORT        "sdram1_dqmh"  IO_TYPE=LVCMOS33;
+
+# SDRAM1 - Data signals
+
+# LOCATE COMP "sdram_dq[16]" SITE "D19";
+# LOCATE COMP "sdram_dq[17]" SITE "C19";
+# LOCATE COMP "sdram_dq[18]" SITE "B19";
+# LOCATE COMP "sdram_dq[19]" SITE "C18";
+# LOCATE COMP "sdram_dq[20]" SITE "A19";
+# LOCATE COMP "sdram_dq[21]" SITE "A17";
+# LOCATE COMP "sdram_dq[22]" SITE "B17";
+# LOCATE COMP "sdram_dq[23]" SITE "A18";
+# LOCATE COMP "sdram_dq[24]" SITE "B16";
+# LOCATE COMP "sdram_dq[25]" SITE "C16";
+# LOCATE COMP "sdram_dq[26]" SITE "C17";
+# LOCATE COMP "sdram_dq[27]" SITE "E16";
+# LOCATE COMP "sdram_dq[28]" SITE "D16";
+# LOCATE COMP "sdram_dq[29]" SITE "C18";
+# LOCATE COMP "sdram_dq[30]" SITE "D17";
+# LOCATE COMP "sdram_dq[31]" SITE "E17";
+#
+# PORT        "sdram_dq[16]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[17]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[18]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[19]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[20]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[21]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[22]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[23]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[24]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[25]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[26]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[27]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[28]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[29]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[30]" IO_TYPE=LVCMOS33;
+# PORT        "sdram_dq[31]" IO_TYPE=LVCMOS33;
+
+# DDR2 - Address signals
+
+# LOCATE COMP "ddr2_a[0]"  SITE "F1";
+# LOCATE COMP "ddr2_a[1]"  SITE "K3";
+# LOCATE COMP "ddr2_a[2]"  SITE "F2";
+# LOCATE COMP "ddr2_a[3]"  SITE "N6";
+# LOCATE COMP "ddr2_a[4]"  SITE "E4";
+# LOCATE COMP "ddr2_a[5]"  SITE "L1";
+# LOCATE COMP "ddr2_a[6]"  SITE "J4";
+# LOCATE COMP "ddr2_a[7]"  SITE "K4";
+# LOCATE COMP "ddr2_a[8]"  SITE "F4";
+# LOCATE COMP "ddr2_a[9]"  SITE "L2";
+# LOCATE COMP "ddr2_a[10]" SITE "L7";
+# LOCATE COMP "ddr2_a[11]" SITE "H3";
+# LOCATE COMP "ddr2_a[12]" SITE "L3";
+# LOCATE COMP "ddr2_a[13]" SITE "F5";
+#
+# PORT        "ddr2_a[0]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[1]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[2]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[3]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[4]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[5]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[6]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[7]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[8]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[9]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[10]" IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[11]" IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[12]" IO_TYPE=SSTL18_I;
+# PORT        "ddr2_a[13]" IO_TYPE=SSTL18_I;
+
+# LOCATE COMP "ddr2_ba0"   SITE "K2";
+# LOCATE COMP "ddr2_ba1"   SITE "K1";
+#
+# PORT        "ddr2_ba0"   IO_TYPE=SSTL18_I;
+# PORT        "ddr2_ba1"   IO_TYPE=SSTL18_I;
+
+# DDR2 - Control signals
+
+# LOCATE COMP "ddr2_cs_n"  SITE "F3";
+# LOCATE COMP "ddr2_odt"   SITE "E3";
+# LOCATE COMP "ddr2_cas_n" SITE "H1";
+# LOCATE COMP "ddr2_ras_n" SITE "H2";
+# LOCATE COMP "ddr2_cke"   SITE "J3";
+# LOCATE COMP "ddr2_we_n"  SITE "J1";
+# LOCATE COMP "ddr2_ck"    SITE "H6";
+# LOCATE COMP "ddr2_dm"    SITE "K6";
+# LOCATE COMP "ddr2_dqs"   SITE "N3";
+#
+# PORT        "ddr2_cs_n"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_ck"    IO_TYPE=SSTL18D_I;
+# PORT        "ddr2_cke"   IO_TYPE=SSTL18_I;
+# PORT        "ddr2_odt"   IO_TYPE=SSTL18_I;
+# PORT        "ddr2_cas_n" IO_TYPE=SSTL18_I;
+# PORT        "ddr2_ras_n" IO_TYPE=SSTL18_I;
+# PORT        "ddr2_we_n"  IO_TYPE=SSTL18_I;
+#
+# PORT        "ddr2_dqs"   IO_TYPE=SSTL18D_I;
+# PORT        "ddr2_dm"    IO_TYPE=SSTL18_I;
+
+# DDR2 - Data signals
+
+# LOCATE COMP "ddr2_dq[0]"  SITE "J6";
+# LOCATE COMP "ddr2_dq[1]"  SITE "P6";
+# LOCATE COMP "ddr2_dq[2]"  SITE "K5";
+# LOCATE COMP "ddr2_dq[3]"  SITE "L6";
+# LOCATE COMP "ddr2_dq[4]"  SITE "N7";
+# LOCATE COMP "ddr2_dq[5]"  SITE "K7";
+# LOCATE COMP "ddr2_dq[6]"  SITE "P7";
+# LOCATE COMP "ddr2_dq[7]"  SITE "L4";
+#
+# PORT        "ddr2_dq[0]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[1]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[2]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[3]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[4]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[5]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[6]"  IO_TYPE=SSTL18_I;
+# PORT        "ddr2_dq[7]"  IO_TYPE=SSTL18_I;
+
+# eMMC - Control signals
+
+# LOCATE COMP "emmc_cmd"    SITE "B1";
+# LOCATE COMP "emmc_ds"     SITE "D3";
+# LOCATE COMP "emmc_clk"    SITE "C2";
+# LOCATE COMP "emmc_rst_n"  SITE "C1";
+#
+# PORT        "emmc_cmd"    IO_TYPE=LVCMOS18;
+# PORT        "emmc_ds"     IO_TYPE=LVCMOS18;
+# PORT        "emmc_clk"    IO_TYPE=LVCMOS18;
+# PORT        "emmc_rst_n"  IO_TYPE=LVCMOS18;
+
+# eMMC - IO signals
+
+# LOCATE COMP "emmc_io[0]"  SITE "C3";
+# LOCATE COMP "emmc_io[1]"  SITE "D2";
+# LOCATE COMP "emmc_io[2]"  SITE "D1";
+# LOCATE COMP "emmc_io[3]"  SITE "D5";
+# LOCATE COMP "emmc_io[4]"  SITE "D4";
+# LOCATE COMP "emmc_io[5]"  SITE "C4";
+# LOCATE COMP "emmc_io[6]"  SITE "C5";
+# LOCATE COMP "emmc_io[7]"  SITE "E1";
+#
+# PORT        "emmc_io[0]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[1]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[2]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[3]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[4]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[5]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[6]"  IO_TYPE=LVCMOS18;
+# PORT        "emmc_io[7]"  IO_TYPE=LVCMOS18;
+
+# IOs - Single-ended
+
+# LOCATE COMP "io_se0"   SITE "T7";
+# LOCATE COMP "io_se1"   SITE "U5";
+# LOCATE COMP "io_se2"   SITE "U6";
+# LOCATE COMP "io_se3"   SITE "V4";
+# LOCATE COMP "io_se4"   SITE "W3";
+# LOCATE COMP "io_se5"   SITE "Y3";
+# LOCATE COMP "io_se6"   SITE "W5";
+# LOCATE COMP "io_se7"   SITE "V6";
+# LOCATE COMP "io_se8"   SITE "AC3";
+# LOCATE COMP "io_se9"   SITE "V7";
+# LOCATE COMP "io_se10"  SITE "AD3";
+# LOCATE COMP "io_se11"  SITE "AC5";
+# LOCATE COMP "io_se12"  SITE "AC6";
+# LOCATE COMP "io_se13"  SITE "AJ1";
+# LOCATE COMP "io_se14"  SITE "AK1";
+# LOCATE COMP "io_se15"  SITE "AK3";
+# LOCATE COMP "io_se16"  SITE "Y7";
+# LOCATE COMP "io_se17"  SITE "AL3";
+# LOCATE COMP "io_se18"  SITE "AG1";
+# LOCATE COMP "io_se19"  SITE "AG3";
+# LOCATE COMP "io_se20"  SITE "AH1";
+# LOCATE COMP "io_se21"  SITE "AH3";
+# LOCATE COMP "io_se22"  SITE "AE2";
+# LOCATE COMP "io_se23"  SITE "AE3";
+# LOCATE COMP "io_se24"  SITE "AE4";
+# LOCATE COMP "io_se25"  SITE "AE5";
+# LOCATE COMP "io_se26"  SITE "AE6";
+# LOCATE COMP "io_se27"  SITE "AD6";
+# LOCATE COMP "io_se28"  SITE "AD7";
+# LOCATE COMP "io_se29"  SITE "AC7";
+# LOCATE COMP "io_se30"  SITE "AB7";
+# LOCATE COMP "io_se31"  SITE "U7";
+# LOCATE COMP "io_se32"  SITE "V1";
+# LOCATE COMP "io_se33"  SITE "W2";
+# LOCATE COMP "io_se34"  SITE "U4";
+# LOCATE COMP "io_se35"  SITE "T6";
+# LOCATE COMP "io_se36"  SITE "R6";
+# LOCATE COMP "io_se37"  SITE "R7";
+# LOCATE COMP "io_se38"  SITE "AG28";
+# LOCATE COMP "io_se39"  SITE "AH28";
+# LOCATE COMP "io_se40"  SITE "AJ28";
+# LOCATE COMP "io_se41"  SITE "AK28";
+# LOCATE COMP "io_se42"  SITE "AL28";
+# LOCATE COMP "io_se43"  SITE "AM28";
+# LOCATE COMP "io_se44"  SITE "AK29";
+# LOCATE COMP "io_se45"  SITE "AM29";
+ LOCATE COMP "carrier_led1_o"  SITE "AM30";
+ LOCATE COMP "carrier_led0_o"  SITE "AL30";
+# LOCATE COMP "io_se48"  SITE "AM31";
+# LOCATE COMP "io_se49"  SITE "AK30";
+# LOCATE COMP "io_se50"  SITE "W4";
+# LOCATE COMP "io_se51"  SITE "Y1";
+# LOCATE COMP "io_se52"  SITE "AB2";
+# LOCATE COMP "io_se53"  SITE "AB1";
+# LOCATE COMP "io_se54"  SITE "AC2";
+# LOCATE COMP "io_se55"  SITE "AC1";
+# LOCATE COMP "io_se56"  SITE "AE1";
+# LOCATE COMP "io_se57"  SITE "AD1";
+# LOCATE COMP "io_se58"  SITE "Y4";
+# LOCATE COMP "io_se59"  SITE "AD4";
+# LOCATE COMP "io_se60"  SITE "Y5";
+# LOCATE COMP "io_se61"  SITE "Y6";
+# LOCATE COMP "io_se62"  SITE "AB3";
+# LOCATE COMP "io_se63"  SITE "AB4";
+# LOCATE COMP "io_se64"  SITE "AB5";
+# LOCATE COMP "io_se65"  SITE "AB6";
+#
+# PORT        "io_se0"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se1"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se2"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se3"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se4"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se5"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se6"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se7"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se8"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se9"   IO_TYPE=LVCMOS33; 
+# PORT        "io_se10"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se11"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se12"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se13"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se14"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se15"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se16"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se17"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se18"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se19"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se20"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se21"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se22"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se23"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se24"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se25"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se26"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se27"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se28"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se29"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se30"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se31"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se32"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se33"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se34"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se35"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se36"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se37"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se38"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se39"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se40"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se41"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se42"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se43"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se44"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se45"  IO_TYPE=LVCMOS33; 
+ PORT        "carrier_led1_o"  IO_TYPE=LVCMOS33; 
+ PORT        "carrier_led0_o"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se48"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se49"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se50"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se51"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se52"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se53"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se54"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se55"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se56"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se57"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se58"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se59"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se60"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se61"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se62"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se63"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se64"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se65"  IO_TYPE=LVCMOS33; 
+
+# IOs - Differential-pair
+
+# LOCATE COMP "io_rtd0"    SITE "AD27";
+# LOCATE COMP "io_rtd1"    SITE "AB28";
+# LOCATE COMP "io_rd2"     SITE "AC28";
+# LOCATE COMP "io_rd3"     SITE "AC31";
+# LOCATE COMP "io_rtd4"    SITE "AB30";
+# LOCATE COMP "io_rd5"     SITE "AD30";
+# LOCATE COMP "io_rd6"     SITE "AD32";
+# LOCATE COMP "io_rtd7"    SITE "AB32";
+# LOCATE COMP "io_rtd8"    SITE "W31";
+# LOCATE COMP "io_rtd9"    SITE "T32";
+# LOCATE COMP "io_rtd10"   SITE "N32";
+# LOCATE COMP "io_rtd11"   SITE "H31";
+# LOCATE COMP "io_rtd12"   SITE "R29";
+# LOCATE COMP "io_rtd13"   SITE "P28";
+# LOCATE COMP "io_rtd14"   SITE "L31";
+# LOCATE COMP "io_rtd15"   SITE "F30";
+# LOCATE COMP "io_rtd16"   SITE "C28";
+# LOCATE COMP "io_rtd17"   SITE "Y26";
+# LOCATE COMP "io_rtd18"   SITE "AC30";
+# LOCATE COMP "io_rtd19"   SITE "Y29";
+# LOCATE COMP "io_rtd20"   SITE "U29";
+# LOCATE COMP "io_rtd21"   SITE "R32";
+# LOCATE COMP "io_rtd22"   SITE "N27";
+# LOCATE COMP "io_rtd23"   SITE "R27";
+# LOCATE COMP "io_rtd24"   SITE "P31";
+# LOCATE COMP "io_rtd25"   SITE "N30";
+# LOCATE COMP "io_rtd26"   SITE "K31";
+# LOCATE COMP "io_rtd27"   SITE "F31";
+# LOCATE COMP "io_rtd28"   SITE "D29";
+# LOCATE COMP "io_rtd29"   SITE "B32";
+# LOCATE COMP "io_rtd30"   SITE "H27";
+# LOCATE COMP "io_rtd31"   SITE "K27";
+#
+# PORT        "io_rtd0"    IO_TYPE=LVDS; 
+# PORT        "io_rtd1"    IO_TYPE=LVDS; 
+# PORT        "io_rd2"     IO_TYPE=LVDS; 
+# PORT        "io_rd3"     IO_TYPE=LVDS; 
+# PORT        "io_rtd4"    IO_TYPE=LVDS; 
+# PORT        "io_rd5"     IO_TYPE=LVDS; 
+# PORT        "io_rd6"     IO_TYPE=LVDS; 
+# PORT        "io_rtd7"    IO_TYPE=LVDS; 
+# PORT        "io_rtd8"    IO_TYPE=LVDS; 
+# PORT        "io_rtd9"    IO_TYPE=LVDS; 
+# PORT        "io_rtd10"   IO_TYPE=LVDS; 
+# PORT        "io_rtd11"   IO_TYPE=LVDS; 
+# PORT        "io_rtd12"   IO_TYPE=LVDS; 
+# PORT        "io_rtd13"   IO_TYPE=LVDS; 
+# PORT        "io_rtd14"   IO_TYPE=LVDS; 
+# PORT        "io_rtd15"   IO_TYPE=LVDS; 
+# PORT        "io_rtd16"   IO_TYPE=LVDS; 
+# PORT        "io_rtd17"   IO_TYPE=LVDS; 
+# PORT        "io_rtd18"   IO_TYPE=LVDS; 
+# PORT        "io_rtd19"   IO_TYPE=LVDS; 
+# PORT        "io_rtd20"   IO_TYPE=LVDS; 
+# PORT        "io_rtd21"   IO_TYPE=LVDS; 
+# PORT        "io_rtd22"   IO_TYPE=LVDS; 
+# PORT        "io_rtd23"   IO_TYPE=LVDS; 
+# PORT        "io_rtd24"   IO_TYPE=LVDS; 
+# PORT        "io_rtd25"   IO_TYPE=LVDS; 
+# PORT        "io_rtd26"   IO_TYPE=LVDS; 
+# PORT        "io_rtd27"   IO_TYPE=LVDS; 
+# PORT        "io_rtd28"   IO_TYPE=LVDS; 
+# PORT        "io_rtd29"   IO_TYPE=LVDS; 
+# PORT        "io_rtd30"   IO_TYPE=LVDS; 
+# PORT        "io_rtd31"   IO_TYPE=LVDS; 
+
+# LEDs
+
+# LOCATE COMP "som_led0_o" SITE "F15";
+# LOCATE COMP "som_led1_o" SITE "F16";
+#
+# PORT        "som_led0_o" OPENDRAIN=ON DRIVE=4;
+# PORT        "som_led1_o" OPENDRAIN=ON DRIVE=4;
