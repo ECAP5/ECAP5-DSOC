@@ -44,15 +44,6 @@ find_package(Python3 COMPONENTS Interpreter Development)
 message(STATUS "Collecting dependencies")
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/dependency.cmake)
 
-add_dependency(ECAP5_TREQ
-  GIT ecap5/ecap5-treq
-  TAG tags/v2.3.1
-  BINARY ecap5-treq)
-
-add_dependency(ECAP5_DTESTLIB
-  GIT ecap5/ecap5-dtestlib
-  TAG tags/v1.0.0)
-
 add_dependency(sphinx-cmake
   GIT ecap5/sphinx-cmake
   TAG tags/v1.0.1)
@@ -65,12 +56,39 @@ add_dependency(oss-cad-suite-cmake
   GIT ecap5/oss-cad-suite-cmake
   TAG tags/v1.0.0)
 
+add_dependency(ECAP5_TREQ
+  GIT ecap5/ecap5-treq
+  TAG tags/v2.3.1
+  BINARY ecap5-treq)
+
+add_dependency(ECAP5_DTESTLIB
+  GIT ecap5/ecap5-dtestlib
+  TAG release/v1.1.0)
+
+add_dependency(ECAP5_DPROC
+  GIT ecap5/ecap5-dproc
+  TAG release/v1.0.0-alpha2)
+
+add_dependency(ECAP5_DWBUART
+  GIT ecap5/ecap5-dwbuart
+  TAG release/v2.0.0)
+
+add_dependency(ECAP5_DWBMEM_BRAM
+  GIT ecap5/ecap5-dwbmem-bram
+  TAG release/v1.0.0)
+
+add_dependency(ECAP5_DWBMMSC
+  GIT ecap5/ecap5-dwbmmsc
+  TAG release/v1.0.0)
+
 # Configure dependencies
 
 include(${verilator_cmake_SOURCE_DIR}/cmake/verilator-config.cmake)
 include(${ecap5_treq_SOURCE_DIR}/config.cmake)
 list(APPEND CMAKE_MODULE_PATH "${sphinx_cmake_SOURCE_DIR}/cmake")
 include(${oss_cad_suite_cmake_SOURCE_DIR}/cmake/oss-cad-suite-config.cmake)
+include(${ecap5_dtestlib_SOURCE_DIR}/cmake/testbench.cmake)
+include(${ecap5_dtestlib_SOURCE_DIR}/cmake/lint.cmake)
 
 # Include subdirectories
 

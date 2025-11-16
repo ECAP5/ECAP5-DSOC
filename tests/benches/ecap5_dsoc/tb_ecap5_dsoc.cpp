@@ -37,8 +37,18 @@ enum CondId {
 
 class TB_Ecap5_dsoc : public Testbench<Vtb_ecap5_dsoc> {
 public:
+  void reset() {
+    this->core->rst_i = 1;
+    for(int i = 0; i < 5; i++) {
+      this->tick();
+    }
+    this->core->rst_i = 0;
+
+    Testbench<Vtb_ecap5_dsoc>::reset();
+  }
+
   void tick() {
-//    Testbench<Vtb_ecap5_dsoc>::tick();
+    Testbench<Vtb_ecap5_dsoc>::tick();
   }
 };
 
@@ -58,6 +68,8 @@ int main(int argc, char ** argv, char ** env) {
 
   /************************************************************/
 
+  tb->reset();
+  tb->n_tick(1024);
 
   /************************************************************/
 
