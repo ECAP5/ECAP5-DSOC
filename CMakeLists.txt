@@ -93,6 +93,7 @@ include(${ecap5_dtestlib_SOURCE_DIR}/cmake/lint.cmake)
 # Include subdirectories
 
 add_subdirectory(docs)
+add_subdirectory(firmware)
 add_subdirectory(tests)
 
 # Bitstream generation

@@ -29,7 +29,7 @@ set(INCLUDE_DIRS ${ecap5_dproc_SOURCE_DIR}/src/include/)
 # HDL library directories
 set(LIBS_DIR ${ecap5_dtestlib_SOURCE_DIR}/src/)
 # Bench CSV output directory
-set(TESTDATA_DIR ${CMAKE_CURRENT_BINARY_DIR}/testdata/)
+set(TESTDATA_DIR ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Lint
 add_lint_target(
