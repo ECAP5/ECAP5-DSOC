@@ -1,0 +1,87 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Tue Nov 25 22:41:03 2025
+[*]
+[dumpfile] "/Users/cchaine/Desktop/Documents/projects/.ecap5.nosync/design/soc/build/tests/waves/ecap5_dsoc.vcd"
+[dumpfile_mtime] "Tue Nov 25 22:38:52 2025"
+[dumpfile_size] 386604
+[savefile] "/Users/cchaine/Desktop/Documents/projects/.ecap5.nosync/design/soc/config/gtkwave/config/ecap5-dsoc.gtkw"
+[timestart] 821
+[size] 1920 955
+[pos] -1 -1
+*-6.000000 1039 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[markername] AA
+[markername] BB
+[markername] CC
+[markername] DD
+[markername] EE
+[markername] FF
+[markername] GG
+[markername] HH
+[markername] II
+[markername] JJ
+[markername] KK
+[markername] LL
+[markername] MM
+[markername] NN
+[markername] OO
+[markername] PP
+[markername] QQ
+[markername] RR
+[markername] SS
+[markername] TT
+[markername] UU
+[markername] VV
+[markername] WW
+[markername] XX
+[markername] YY
+[markername] ZZ
+[treeopen] TOP.
+[treeopen] TOP.tb_ecap5_dsoc.
+[treeopen] TOP.tb_ecap5_dsoc.dut.
+[treeopen] TOP.tb_ecap5_dsoc.dut.uart_inst.
+[sst_width] 255
+[signals_width] 284
+[sst_expanded] 1
+[sst_vpaned_height] 283
+@22
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_adr_o[31:0]
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_dat_i[31:0]
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_dat_o[31:0]
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_sel_o[3:0]
+@28
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_we_o
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_ack_i
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_stb_o
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_cyc_o
+[color] 2
+TOP.tb_ecap5_dsoc.dut.core_wb_stall_i
+TOP.tb_ecap5_dsoc.dut.uart_wb_ack_o
+@22
+TOP.tb_ecap5_dsoc.dut.uart_wb_adr_i[31:0]
+TOP.tb_ecap5_dsoc.dut.uart_wb_dat_i[31:0]
+TOP.tb_ecap5_dsoc.dut.uart_wb_dat_o[31:0]
+TOP.tb_ecap5_dsoc.dut.uart_wb_sel_i[3:0]
+@28
+TOP.tb_ecap5_dsoc.dut.uart_wb_we_i
+TOP.tb_ecap5_dsoc.dut.uart_wb_stb_i
+TOP.tb_ecap5_dsoc.dut.uart_wb_cyc_i
+TOP.tb_ecap5_dsoc.dut.uart_wb_stall_o
+@820
+[color] 1
+TOP.tb_ecap5_dsoc.dut.uart_inst.txdr_txd_q[7:0]
+@28
+[color] 7
+TOP.tb_ecap5_dsoc.dut.uart_rx_i
+[color] 7
+TOP.tb_ecap5_dsoc.dut.uart_tx_o
+[pattern_trace] 1
+[pattern_trace] 0
