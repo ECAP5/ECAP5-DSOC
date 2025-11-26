@@ -19,16 +19,15 @@
 # You should have received a copy of the GNU General Public License
 # along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.21)
 include(FetchContent)
 
-project(ECAP5_DSOC VERSION 1.0.0)
+project(ECAP5_DSOC)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 set(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # Create python virtual env
-message(STATUS "Creating python venv")
 set(VENV_DIR ${CMAKE_BINARY_DIR}/venv)
 if(NOT EXISTS "${VENV_DIR}")
   find_package(Python3 COMPONENTS Interpreter)
@@ -41,79 +40,87 @@ find_package(Python3 COMPONENTS Interpreter Development)
 
 # Dependencies
 
-message(STATUS "Collecting dependencies")
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/dependency.cmake)
 
-add_dependency(sphinx-cmake
+add_dependency(
   GIT ecap5/sphinx-cmake
   TAG tags/v1.0.1)
 
-add_dependency(verilator-cmake
+add_dependency(
   GIT ecap5/verilator-cmake
   TAG tags/v1.0.1)
 
-add_dependency(oss-cad-suite-cmake
-  GIT ecap5/oss-cad-suite-cmake
-  TAG tags/v1.0.0)
-
-add_dependency(ECAP5_TREQ
+add_dependency(
   GIT ecap5/ecap5-treq
-  TAG tags/v2.3.1
+  TAG release/v3.0.0
   BINARY ecap5-treq)
 
-add_dependency(ECAP5_DTESTLIB
+add_dependency(
+  GIT ecap5/oss-cad-suite-cmake
+  TAG release/v2.0.0)
+
+add_dependency(
   GIT ecap5/ecap5-dtestlib
   TAG release/v1.1.0)
 
-add_dependency(ECAP5_DPROC
+add_dependency(
   GIT ecap5/ecap5-dproc
   TAG release/v1.0.0-alpha2)
 
-add_dependency(ECAP5_DWBUART
+add_dependency(
   GIT ecap5/ecap5-dwbuart
   TAG release/v2.0.0)
 
-add_dependency(ECAP5_DWBMEM_BRAM
+add_dependency(
   GIT ecap5/ecap5-dwbmem-bram
   TAG release/v1.0.0)
 
-add_dependency(ECAP5_DWBMMSC
-  GIT ecap5/ecap5-dwbmmsc
-  TAG release/v1.0.0)
+# Define an interface library
+add_library(ecap5_dsoc INTERFACE)
+target_sources(ecap5_dsoc INTERFACE
+  ${CMAKE_CURRENT_LIST_DIR}/src/ecap5_dsoc.sv
+)
+target_link_libraries(ecap5_dsoc INTERFACE
+  ecap5_dproc
+  ecap5_dwbuart
+  ecap5_dwbmem_bram
+)
 
-# Configure dependencies
+if(PROJECT_IS_TOP_LEVEL)
+  # Configure dependencies
 
-include(${verilator_cmake_SOURCE_DIR}/cmake/verilator-config.cmake)
-include(${ecap5_treq_SOURCE_DIR}/config.cmake)
-list(APPEND CMAKE_MODULE_PATH "${sphinx_cmake_SOURCE_DIR}/cmake")
-include(${oss_cad_suite_cmake_SOURCE_DIR}/cmake/oss-cad-suite-config.cmake)
-include(${ecap5_dtestlib_SOURCE_DIR}/cmake/testbench.cmake)
-include(${ecap5_dtestlib_SOURCE_DIR}/cmake/lint.cmake)
+  include(${ecap5_verilator_cmake_SOURCE_DIR}/cmake/verilator-config.cmake)
+  include(${ecap5_ecap5_treq_SOURCE_DIR}/config.cmake)
+  list(APPEND CMAKE_MODULE_PATH "${ecap5_sphinx_cmake_SOURCE_DIR}/cmake")
+  include(${ecap5_oss_cad_suite_cmake_SOURCE_DIR}/cmake/oss-cad-suite-config.cmake)
+  include(${ecap5_ecap5_dtestlib_SOURCE_DIR}/cmake/testbench.cmake)
+  include(${ecap5_ecap5_dtestlib_SOURCE_DIR}/cmake/lint.cmake)
 
-# Include subdirectories
+  # Include subdirectories
 
-add_subdirectory(docs)
-add_subdirectory(firmware)
-add_subdirectory(tests)
+  add_subdirectory(docs)
+  add_subdirectory(firmware)
+  add_subdirectory(tests)
 
-# Bitstream generation
+  # Bitstream generation
 
-add_synthesis_target(
-  SOURCES ${CMAKE_CURRENT_LIST_DIR}/src/*
-  TOP_MODULE ecap5_dsoc
-  TARGET_FPGA ecp5
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json)
+  add_synthesis_target(
+    LIB        ecap5_dsoc
+    TOP_MODULE ecap5_dsoc
+    TARGET_FPGA ecp5
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json)
 
-add_place_and_route_target(
-  INPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
-  TARGET_FPGA ecp5
-  PACKAGE_OPTIONS --85k --package CABGA756
-  PINOUT_OPTIONS --lpf ${CMAKE_CURRENT_LIST_DIR}/config/pinout.lpf
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/placement.config)
+  add_place_and_route_target(
+    INPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
+    TARGET_FPGA ecp5
+    PACKAGE_OPTIONS --85k --package CABGA756
+    PINOUT_OPTIONS --lpf ${CMAKE_CURRENT_LIST_DIR}/config/pinout.lpf
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/placement.config)
 
-add_ecp5_bitstream_target(
-  INPUT ${CMAKE_CURRENT_BINARY_DIR}/placement.config
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/bitstream.bit
-  COMPRESS)
+  add_ecp5_bitstream_target(
+    INPUT ${CMAKE_CURRENT_BINARY_DIR}/placement.config
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/bitstream.bit
+    COMPRESS)
 
-add_custom_target(gen DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/bitstream.bit)
+  add_custom_target(gen DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/bitstream.bit)
+endif()
