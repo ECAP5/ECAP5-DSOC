@@ -22,7 +22,6 @@
 
 module ecap5_dsoc (
   input logic  clk_i,
-  input logic  rst_i,
 
 //=================================
   //    UART interface
@@ -42,6 +41,9 @@ module ecap5_dsoc (
   input logic button0_i,
   input logic button1_i
 );
+
+// poweron-reset
+logic        por_rst;
 
 // core master memory bus
 logic[31:0]  core_wb_adr_o;
@@ -76,11 +78,16 @@ logic        bram_wb_ack_o;
 logic        bram_wb_cyc_i;
 logic        bram_wb_stall_o;
 
+poweron_reset por_inst (
+  .clk_i (clk_i),
+  .rst_o (por_rst)
+);
+
 ecap5_dproc #(
   .BOOT_ADDRESS (32'h0)
 ) core_inst (
   .clk_i (clk_i),
-  .rst_i (rst_i),
+  .rst_i (por_rst),
 
   .wb_adr_o   (core_wb_adr_o),
   .wb_dat_i   (core_wb_dat_i),
@@ -95,7 +102,7 @@ ecap5_dproc #(
 
 ecap5_dwbuart uart_inst (
   .clk_i (clk_i),
-  .rst_i (rst_i),
+  .rst_i (por_rst),
 
   .wb_adr_i   (uart_wb_adr_i),
   .wb_dat_o   (uart_wb_dat_o),
@@ -116,7 +123,7 @@ ecap5_dwbmem_bram #(
   .PRELOAD_HEX_PATH ("/tmp/build/firmware/helloworld.load")
 ) bram_inst (
   .clk_i (clk_i),
-  .rst_i (rst_i),
+  .rst_i (por_rst),
 
   .wb_adr_i   (bram_wb_adr_i),
   .wb_dat_o   (bram_wb_dat_o),

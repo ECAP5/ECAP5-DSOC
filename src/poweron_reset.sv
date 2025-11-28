@@ -20,39 +20,23 @@
  * along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-module tb_ecap5_dsoc (
+module poweron_reset (
   input logic  clk_i,
-
-//=================================
-  //    UART interface
-  
-  output logic uart_tx_o,
-  input  logic uart_rx_i,
-  
-  //=================================
-  //    LEDs interface
-
-  output logic led0_o,
-  output logic led1_o,
-
-  //=================================
-  //    Buttons interface
-
-  input logic button0_i,
-  input logic button1_i
+  output logic rst_o
 );
 
-ecap5_dsoc dut (
-  .clk_i (clk_i),
+logic[15:0] counter = '0;
+logic rst_internal = 1;
 
-  .uart_tx_o (uart_tx_o),
-  .uart_rx_i (uart_rx_i),
+always_ff @(posedge clk_i) begin
+  if (counter != '1) begin
+    counter <= counter + 1'b1;
+    rst_internal <= 1'b1;
+  end else begin
+    rst_internal <= 1'b0;
+  end
+end
 
-  .led0_o (led0_o),
-  .led1_o (led1_o),
+assign rst_o = rst_internal;
 
-  .button0_i (button0_i),
-  .button1_i (button1_i)
-);
-
-endmodule // tb_ecap5_dsoc
+endmodule // poweron_reset

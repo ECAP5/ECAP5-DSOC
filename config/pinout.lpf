@@ -1,13 +1,13 @@
 # Configuration
 
-#SYSCONFIG CONFIG_IOVOLTAGE=3.3 COMPRESS_CONFIG=ON MCCLK_FREQ=62 SLAVE_SPI_PORT=DISABLE MASTER_SPI_PORT=ENABLE SLAVE_PARALLEL_PORT=DISABLE;
+SYSCONFIG CONFIG_IOVOLTAGE=3.3 COMPRESS_CONFIG=ON MCCLK_FREQ=62 SLAVE_SPI_PORT=DISABLE MASTER_SPI_PORT=ENABLE SLAVE_PARALLEL_PORT=DISABLE;
 
 # Oscillator input
 
-# LOCATE COMP    "clk_i" SITE "P5";
-#
-# PORT           "clk_i" IO_TYPE=LVCMOS33;
-# FREQUENCY PORT "clk_i" 24 MHZ;
+ LOCATE COMP    "clk_i" SITE "P5";
+
+ PORT           "clk_i" IO_TYPE=LVCMOS33;
+ FREQUENCY PORT "clk_i" 24 MHZ;
 
 # Power monitoring - SPI
 
@@ -425,12 +425,12 @@
 # LOCATE COMP "io_se41"  SITE "AK28";
 # LOCATE COMP "io_se42"  SITE "AL28";
 # LOCATE COMP "io_se43"  SITE "AM28";
-# LOCATE COMP "io_se44"  SITE "AK29";
-# LOCATE COMP "io_se45"  SITE "AM29";
- LOCATE COMP "carrier_led1_o"  SITE "AM30";
- LOCATE COMP "carrier_led0_o"  SITE "AL30";
-# LOCATE COMP "io_se48"  SITE "AM31";
-# LOCATE COMP "io_se49"  SITE "AK30";
+ LOCATE COMP "uart_tx_o"  SITE "AK29";
+ LOCATE COMP "uart_rx_i"  SITE "AM29";
+# LOCATE COMP "io_se46"  SITE "AM30";
+# LOCATE COMP "io_se47"  SITE "AL30";
+ LOCATE COMP "button0_i"  SITE "AM31";
+ LOCATE COMP "button1_i"  SITE "AK30";
 # LOCATE COMP "io_se50"  SITE "W4";
 # LOCATE COMP "io_se51"  SITE "Y1";
 # LOCATE COMP "io_se52"  SITE "AB2";
@@ -492,12 +492,12 @@
 # PORT        "io_se41"  IO_TYPE=LVCMOS33; 
 # PORT        "io_se42"  IO_TYPE=LVCMOS33; 
 # PORT        "io_se43"  IO_TYPE=LVCMOS33; 
-# PORT        "io_se44"  IO_TYPE=LVCMOS33; 
-# PORT        "io_se45"  IO_TYPE=LVCMOS33; 
- PORT        "carrier_led1_o"  IO_TYPE=LVCMOS33; 
- PORT        "carrier_led0_o"  IO_TYPE=LVCMOS33; 
-# PORT        "io_se48"  IO_TYPE=LVCMOS33; 
-# PORT        "io_se49"  IO_TYPE=LVCMOS33; 
+ PORT        "uart_tx_o"  IO_TYPE=LVCMOS33; 
+ PORT        "uart_rx_i"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se46"  IO_TYPE=LVCMOS33; 
+# PORT        "io_se47"  IO_TYPE=LVCMOS33; 
+ PORT        "button0_i"  IO_TYPE=LVCMOS33; 
+ PORT        "button1_i"  IO_TYPE=LVCMOS33; 
 # PORT        "io_se50"  IO_TYPE=LVCMOS33; 
 # PORT        "io_se51"  IO_TYPE=LVCMOS33; 
 # PORT        "io_se52"  IO_TYPE=LVCMOS33; 
@@ -585,8 +585,8 @@
 
 # LEDs
 
-# LOCATE COMP "som_led0_o" SITE "F15";
-# LOCATE COMP "som_led1_o" SITE "F16";
-#
-# PORT        "som_led0_o" OPENDRAIN=ON DRIVE=4;
-# PORT        "som_led1_o" OPENDRAIN=ON DRIVE=4;
+ LOCATE COMP "led0_o" SITE "F15";
+ LOCATE COMP "led1_o" SITE "F16";
+
+ PORT        "led0_o" OPENDRAIN=ON DRIVE=4;
+ PORT        "led1_o" OPENDRAIN=ON DRIVE=4;
