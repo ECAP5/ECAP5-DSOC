@@ -79,6 +79,7 @@ add_dependency(
 add_library(ecap5_dsoc INTERFACE)
 target_sources(ecap5_dsoc INTERFACE
   ${CMAKE_CURRENT_LIST_DIR}/src/ecap5_dsoc.sv
+  ${CMAKE_CURRENT_LIST_DIR}/src/poweron_reset.sv
 )
 target_link_libraries(ecap5_dsoc INTERFACE
   ecap5_dproc
