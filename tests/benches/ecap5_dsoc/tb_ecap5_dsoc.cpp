@@ -38,11 +38,7 @@ enum CondId {
 class TB_Ecap5_dsoc : public Testbench<Vtb_ecap5_dsoc> {
 public:
   void reset() {
-    this->core->rst_i = 1;
-    for(int i = 0; i < 5; i++) {
-      this->tick();
-    }
-    this->core->rst_i = 0;
+    this->n_tick(65535);
 
     Testbench<Vtb_ecap5_dsoc>::reset();
   }
@@ -65,6 +61,9 @@ int main(int argc, char ** argv, char ** env) {
   tb->set_debug_log(verbose);
   tb->init_conditions(__CondIdEnd);
   tb->debug_log = true;
+
+  // 24MHz
+  tb->clk_period_in_ps = 41667;
 
   /************************************************************/
 
