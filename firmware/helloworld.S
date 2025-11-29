@@ -26,24 +26,23 @@
 .equ UART_RXDR, 0x8
 .equ UART_TXDR, 0xC
 
-.equ UART_CLK_DIV_SHIFT, 16
-.equ UART_DS_SHIFT, 3
+.equ UART_ACC_INCR_SHIFT, 16
+.equ UART_DS_MASK, (1 << 3)
 .equ UART_TXE_MASK, (1 << 1)
 
-.equ UART_CLK_DIV, 2
+.equ UART_ACC_INCR, 26
 .equ UART_DS, 1
-
 
 .section .text
 .global _start
 _start:
   # Configure the UART peripheral
-  # x1 = (CLK_DIV << CLK_DIV_SHIFT)
-  li    x1, UART_CLK_DIV
-  slli  x1, x1, UART_CLK_DIV_SHIFT
-  # x2 = (DS << DS_SHIFT)
-  li    x2, UART_DS_SHIFT
-  # x1 = (CLK_DIV << CLK_DIV_SHIFT) | (DS << DS_SHIFT)
+  # x1 = (ACC_INCR << ACC_INCR_SHIFT)
+  li    x1, UART_ACC_INCR
+  slli  x1, x1, UART_ACC_INCR_SHIFT
+  # x2 = DS_MASK
+  li    x2, UART_DS_MASK
+  # x1 = (ACC_INCR << ACC_INCR_SHIFT) | DS_MASK
   or    x1, x1, x2
 
   # Write the configuration
