@@ -39,6 +39,8 @@ add_testbench(
   BENCH_DIR         ${BENCH_DIR}
   TESTDATA_DIR      ${TESTDATA_DIR}
   TEST_INCLUDE_DIRS ${TEST_INCLUDE_DIRS}
+  DEPENDS           helloworld
+  DEFINES           BOOTLOADER_PATH=\\\"${CMAKE_BINARY_DIR}/firmware/helloworld.load\\\"
 )
 
 # Main targets
