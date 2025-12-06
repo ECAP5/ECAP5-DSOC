@@ -48,7 +48,7 @@ add_dependency(
 
 add_dependency(
   GIT ecap5/verilator-cmake
-  TAG tags/v1.0.1)
+  TAG release/v1.1.0)
 
 add_dependency(
   GIT ecap5/ecap5-treq
@@ -109,7 +109,9 @@ if(PROJECT_IS_TOP_LEVEL)
     LIB        ecap5_dsoc
     TOP_MODULE ecap5_dsoc
     TARGET_FPGA ecp5
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json)
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
+    DEPENDS helloworld
+    DEFINES BOOTLOADER_PATH=\\\"${CMAKE_CURRENT_BINARY_DIR}/firmware/helloworld.dump\\\")
 
   add_place_and_route_target(
     INPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
