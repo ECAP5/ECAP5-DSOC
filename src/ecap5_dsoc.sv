@@ -120,7 +120,7 @@ ecap5_dwbuart uart_inst (
 
 ecap5_dwbmem_bram #(
   .ENABLE_PRELOADING (1),
-  .PRELOAD_HEX_PATH ("/tmp/build/firmware/helloworld.load")
+  .PRELOAD_HEX_PATH (`BOOTLOADER_PATH)
 ) bram_inst (
   .clk_i (clk_i),
   .rst_i (por_rst),
