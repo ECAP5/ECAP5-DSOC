@@ -74,13 +74,13 @@
 
 # SRAM - Control signals
 
-# LOCATE COMP "sram_ce_n"  SITE "A28";
+ LOCATE COMP "sram_ce_n"  SITE "A28";
 # LOCATE COMP "sram_oe_n"  SITE "C20";
 # LOCATE COMP "sram_lb_n"  SITE "D20";
 # LOCATE COMP "sram_ub_n"  SITE "C22";
 # LOCATE COMP "sram_we_n"  SITE "F24";
 #
-# PORT        "sram_ce_n"  IO_TYPE=LVCMOS33;
+ PORT        "sram_ce_n"  IO_TYPE=LVCMOS33;
 # PORT        "sram_oe_n"  IO_TYPE=LVCMOS33;
 # PORT        "sram_lb_n"  IO_TYPE=LVCMOS33;
 # PORT        "sram_ub_n"  IO_TYPE=LVCMOS33;
@@ -160,17 +160,17 @@
 
 # SDRAM0 - Control signals
 
-# LOCATE COMP "sdram0_cs_n"  SITE "B3";
+ LOCATE COMP "sdram0_cs_n"  SITE "B3";
 # LOCATE COMP "sdram0_we_n"  SITE "B4";
-# LOCATE COMP "sdram0_cke"   SITE "A2";
+ LOCATE COMP "sdram0_cke"   SITE "A2";
 # LOCATE COMP "sdram0_cas_n" SITE "A3";
 # LOCATE COMP "sdram0_ras_n" SITE "A4";
 # LOCATE COMP "sdram0_dqml"  SITE "A5";
 # LOCATE COMP "sdram0_dqmh"  SITE "A8";
 #
-# PORT        "sdram0_cs_n"  IO_TYPE=LVCMOS33;
+ PORT        "sdram0_cs_n"  IO_TYPE=LVCMOS33;
 # PORT        "sdram0_we_n"  IO_TYPE=LVCMOS33;
-# PORT        "sdram0_cke"   IO_TYPE=LVCMOS33;
+ PORT        "sdram0_cke"   IO_TYPE=LVCMOS33;
 # PORT        "sdram0_cas_n" IO_TYPE=LVCMOS33;
 # PORT        "sdram0_ras_n" IO_TYPE=LVCMOS33;
 # PORT        "sdram0_dqml"  IO_TYPE=LVCMOS33;
@@ -214,17 +214,17 @@
 
 # SDRAM1 - Control signals
 
-# LOCATE COMP "sdram1_cs_n"  SITE "A10";
+ LOCATE COMP "sdram1_cs_n"  SITE "A10";
 # LOCATE COMP "sdram1_we_n"  SITE "A13";
-# LOCATE COMP "sdram1_cke"   SITE "A9";
+ LOCATE COMP "sdram1_cke"   SITE "A9";
 # LOCATE COMP "sdram1_cas_n" SITE "A11";
 # LOCATE COMP "sdram1_ras_n" SITE "A14";
 # LOCATE COMP "sdram1_dqml"  SITE "A15";
 # LOCATE COMP "sdram1_dqmh"  SITE "A16";
 #
-# PORT        "sdram1_cs_n"  IO_TYPE=LVCMOS33;
+ PORT        "sdram1_cs_n"  IO_TYPE=LVCMOS33;
 # PORT        "sdram1_we_n"  IO_TYPE=LVCMOS33;
-# PORT        "sdram1_cke"   IO_TYPE=LVCMOS33;
+ PORT        "sdram1_cke"   IO_TYPE=LVCMOS33;
 # PORT        "sdram1_cas_n" IO_TYPE=LVCMOS33;
 # PORT        "sdram1_ras_n" IO_TYPE=LVCMOS33;
 # PORT        "sdram1_dqml"  IO_TYPE=LVCMOS33;
@@ -306,19 +306,19 @@
 
 # DDR2 - Control signals
 
-# LOCATE COMP "ddr2_cs_n"  SITE "F3";
+ LOCATE COMP "ddr2_cs_n"  SITE "F3";
 # LOCATE COMP "ddr2_odt"   SITE "E3";
 # LOCATE COMP "ddr2_cas_n" SITE "H1";
 # LOCATE COMP "ddr2_ras_n" SITE "H2";
-# LOCATE COMP "ddr2_cke"   SITE "J3";
+ LOCATE COMP "ddr2_cke"   SITE "J3";
 # LOCATE COMP "ddr2_we_n"  SITE "J1";
 # LOCATE COMP "ddr2_ck"    SITE "H6";
 # LOCATE COMP "ddr2_dm"    SITE "K6";
 # LOCATE COMP "ddr2_dqs"   SITE "N3";
 #
-# PORT        "ddr2_cs_n"  IO_TYPE=SSTL18_I;
+ PORT        "ddr2_cs_n"  IO_TYPE=SSTL18_I;
 # PORT        "ddr2_ck"    IO_TYPE=SSTL18D_I;
-# PORT        "ddr2_cke"   IO_TYPE=SSTL18_I;
+ PORT        "ddr2_cke"   IO_TYPE=SSTL18_I;
 # PORT        "ddr2_odt"   IO_TYPE=SSTL18_I;
 # PORT        "ddr2_cas_n" IO_TYPE=SSTL18_I;
 # PORT        "ddr2_ras_n" IO_TYPE=SSTL18_I;
@@ -352,12 +352,12 @@
 # LOCATE COMP "emmc_cmd"    SITE "B1";
 # LOCATE COMP "emmc_ds"     SITE "D3";
 # LOCATE COMP "emmc_clk"    SITE "C2";
-# LOCATE COMP "emmc_rst_n"  SITE "C1";
+ LOCATE COMP "emmc_rst_n"  SITE "C1";
 #
 # PORT        "emmc_cmd"    IO_TYPE=LVCMOS18;
 # PORT        "emmc_ds"     IO_TYPE=LVCMOS18;
 # PORT        "emmc_clk"    IO_TYPE=LVCMOS18;
-# PORT        "emmc_rst_n"  IO_TYPE=LVCMOS18;
+ PORT        "emmc_rst_n"  IO_TYPE=LVCMOS18;
 
 # eMMC - IO signals
 

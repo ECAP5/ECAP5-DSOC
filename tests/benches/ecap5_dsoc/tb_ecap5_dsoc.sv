@@ -52,7 +52,16 @@ ecap5_dsoc dut (
   .led1_o (led1_o),
 
   .button0_i (button0_i),
-  .button1_i (button1_i)
+  .button1_i (button1_i),
+
+  .sram_ce_n (),
+  .sdram0_cs_n (),
+  .sdram0_cke (),
+  .sdram1_cs_n (),
+  .sdram1_cke (),
+  .ddr2_cs_n (),
+  .ddr2_cke (),
+  .emmc_rst_n ()
 );
 
 endmodule // tb_ecap5_dsoc
