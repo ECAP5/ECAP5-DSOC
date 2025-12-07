@@ -33,6 +33,10 @@
 .equ UART_ACC_INCR, 26
 .equ UART_DS, 1
 
+.equ TIMER_BASE, 0x8000
+.equ TIMER_TIMEBASE_LOW, 0x0
+.equ TIMER_TIMEBASE_HIGH, 0x1
+
 .section .text
 .global _start
 _start:
@@ -64,8 +68,8 @@ _send_char:
   # Load the char to send
   lb    x1, 0(x11)
 
-  # Loop if end of string
-  beq   x1, x0, _send_string
+  # If the string is fully sent, wait 1s
+  beq   x1, x0, _wait_1s
 
   # Give the char to the UART peripheral
   sb    x1, UART_TXDR(x10)
@@ -74,6 +78,45 @@ _send_char:
   addi  x11, x11, 1
 
   j     _check_send_ready
+
+_wait_1s:
+  # x12 = ms counter
+  li   x12, 1000
+  # x13 = TIMER_BASE
+  li   x13, TIMER_BASE
+
+_read_timebase:
+  lw   x1, TIMER_TIMEBASE_HIGH(x13)
+  lw   x2, TIMER_TIMEBASE_LOW(x13)
+  lw   x3, TIMER_TIMEBASE_HIGH(x13)
+
+  # If the two HIGH's are not equal, loop
+  bne x1, x3, _read_timebase
+
+_compare_timebase:
+  lw   x4, TIMER_TIMEBASE_HIGH(x13)
+  lw   x5, TIMER_TIMEBASE_LOW(x13)
+  lw   x6, TIMER_TIMEBASE_HIGH(x13)
+
+  # If the two HIGH's are not equal, loop
+  bne x4, x6, _compare_timebase
+
+  # If the two are equal
+  bne x2, x5, _decrement
+  bne x3, x6, _decrement 
+
+  # If equal, we wait more
+  j   _compare_timebase
+
+_decrement:
+  # Decrement the counter
+  addi x12, x12, -1
+
+  # Check if zero
+  bne  x0, x12, _read_timebase
+  
+  # Send the next string
+  j    _send_string
 
 .align 4
 

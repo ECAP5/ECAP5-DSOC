@@ -39,7 +39,16 @@ module ecap5_dsoc (
   //    Buttons interface
 
   input logic button0_i,
-  input logic button1_i
+  input logic button1_i,
+
+  output logic sram_ce_n,
+  output logic sdram0_cs_n,
+  output logic sdram0_cke,
+  output logic sdram1_cs_n,
+  output logic sdram1_cke,
+  output logic ddr2_cs_n,
+  output logic ddr2_cke,
+  output logic emmc_rst_n
 );
 
 // poweron-reset
@@ -77,6 +86,17 @@ logic        bram_wb_stb_i;
 logic        bram_wb_ack_o;
 logic        bram_wb_cyc_i;
 logic        bram_wb_stall_o;
+
+// timer slave memory bus
+logic[31:0]  timer_wb_adr_i;
+logic[31:0]  timer_wb_dat_o;
+logic[31:0]  timer_wb_dat_i;
+logic        timer_wb_we_i;
+logic[3:0]   timer_wb_sel_i;
+logic        timer_wb_stb_i;
+logic        timer_wb_ack_o;
+logic        timer_wb_cyc_i;
+logic        timer_wb_stall_o;
 
 poweron_reset por_inst (
   .clk_i (clk_i),
@@ -136,17 +156,61 @@ ecap5_dwbmem_bram #(
   .wb_stall_o (bram_wb_stall_o)
 );
 
-always_comb begin : memory_mapping
-  // 00000000 -> 00004000 = BRAM
-  // 00004000 -> 00008000 = UART
-  bram_wb_cyc_i = core_wb_cyc_o & ~core_wb_adr_o[14]; 
-  bram_wb_adr_i = core_wb_adr_o;
-  uart_wb_cyc_i = core_wb_cyc_o &  core_wb_adr_o[14]; 
-  uart_wb_adr_i = {core_wb_adr_o[31:15], 1'b0, core_wb_adr_o[13:0]};
+ecap5_dwbtimer #(
+  .CLK_FREQ (24000000)
+) timer_inst (
+  .clk_i (clk_i),
+  .rst_i (por_rst),
 
-  core_wb_dat_i = core_wb_adr_o[14] ? uart_wb_dat_o : bram_wb_dat_o;
-  core_wb_ack_i = core_wb_adr_o[14] ? uart_wb_ack_o : bram_wb_ack_o;
-  core_wb_stall_i = core_wb_adr_o[14] ? uart_wb_stall_o : bram_wb_stall_o;
+  .wb_adr_i   (timer_wb_adr_i),
+  .wb_dat_o   (timer_wb_dat_o),
+  .wb_dat_i   (timer_wb_dat_i),
+  .wb_sel_i   (timer_wb_sel_i),
+  .wb_we_i    (timer_wb_we_i),
+  .wb_stb_i   (timer_wb_stb_i),
+  .wb_ack_o   (timer_wb_ack_o),
+  .wb_cyc_i   (timer_wb_cyc_i),
+  .wb_stall_o (timer_wb_stall_o)
+);
+
+always_comb begin : memory_mapping
+  bram_wb_cyc_i = '0;
+  bram_wb_adr_i = '0;
+  uart_wb_cyc_i = '0;
+  uart_wb_adr_i = '0;
+  timer_wb_cyc_i = '0;
+  timer_wb_adr_i = '0;
+  core_wb_dat_i = '0;
+  core_wb_ack_i = '0;
+  core_wb_stall_i = '0;
+
+  // 00000000 -> 00003FFF = BRAM
+  // 00004000 -> 00007FFF = UART
+  // 00008000 -> 0000FFFF = TIMER
+  case(core_wb_adr_o[15:14])
+    2'h0: begin
+      bram_wb_cyc_i = core_wb_cyc_o;
+      bram_wb_adr_i = core_wb_adr_o;
+      core_wb_dat_i = bram_wb_dat_o;
+      core_wb_ack_i = bram_wb_ack_o;
+      core_wb_stall_i = bram_wb_stall_o;
+    end
+    2'h1: begin
+      uart_wb_cyc_i = core_wb_cyc_o;
+      uart_wb_adr_i = {18'b0, core_wb_adr_o[13:0]};
+      core_wb_dat_i = uart_wb_dat_o;
+      core_wb_ack_i = uart_wb_ack_o;
+      core_wb_stall_i = uart_wb_stall_o;
+    end
+    2'h2: begin
+      timer_wb_cyc_i = core_wb_cyc_o;
+      timer_wb_adr_i = {18'b0, core_wb_adr_o[13:0]};
+      core_wb_dat_i = timer_wb_dat_o;
+      core_wb_ack_i = timer_wb_ack_o;
+      core_wb_stall_i = timer_wb_stall_o;
+    end
+    default: begin end
+  endcase
 
   uart_wb_dat_i = core_wb_dat_o;
   uart_wb_sel_i = core_wb_sel_o;
@@ -157,8 +221,22 @@ always_comb begin : memory_mapping
   bram_wb_sel_i = core_wb_sel_o;
   bram_wb_we_i = core_wb_we_o;
   bram_wb_stb_i = core_wb_stb_o;
+
+  timer_wb_dat_i = core_wb_dat_o;
+  timer_wb_sel_i = core_wb_sel_o;
+  timer_wb_we_i = core_wb_we_o;
+  timer_wb_stb_i = core_wb_stb_o;
 end
 
 // TODO: add GPIO peripheral for LED/button interface
+
+assign sram_ce_n = 1;
+assign sdram0_cs_n = 1;
+assign sdram0_cke = 0;
+assign sdram1_cs_n = 1;
+assign sdram1_cke = 0;
+assign ddr2_cs_n = 1;
+assign ddr2_cke = 0;
+assign emmc_rst_n = 0;
 
 endmodule // ecap5_dsoc

@@ -75,6 +75,10 @@ add_dependency(
   GIT ecap5/ecap5-dwbmem-bram
   TAG release/v1.0.0)
 
+add_dependency(
+  GIT ecap5/ecap5-dwbtimer
+  TAG release/v1.0.0)
+
 # Define an interface library
 add_library(ecap5_dsoc INTERFACE)
 target_sources(ecap5_dsoc INTERFACE
@@ -85,6 +89,7 @@ target_link_libraries(ecap5_dsoc INTERFACE
   ecap5_dproc
   ecap5_dwbuart
   ecap5_dwbmem_bram
+  ecap5_dwbtimer
 )
 
 if(PROJECT_IS_TOP_LEVEL)
@@ -111,7 +116,7 @@ if(PROJECT_IS_TOP_LEVEL)
     TARGET_FPGA ecp5
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
     DEPENDS helloworld
-    DEFINES BOOTLOADER_PATH=\\\"${CMAKE_CURRENT_BINARY_DIR}/firmware/helloworld.dump\\\")
+    DEFINES BOOTLOADER_PATH=\\\"${CMAKE_CURRENT_BINARY_DIR}/firmware/helloworld.load\\\")
 
   add_place_and_route_target(
     INPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
