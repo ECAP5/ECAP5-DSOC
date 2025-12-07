@@ -50,7 +50,9 @@ add_custom_command(
 add_custom_command(
   OUTPUT helloworld.load
   COMMAND ${CROSS_COMPILE}objcopy -O verilog --verilog-data-width=4 helloworld.elf helloworld.load
+  COMMAND sed -ie "s/\\(.\\)\\s\\(.\\)/\\1\\n\\2/g" helloworld.load
   DEPENDS helloworld.elf
   VERBATIM)
+
 
 add_custom_target(helloworld DEPENDS helloworld.dump helloworld.load)
