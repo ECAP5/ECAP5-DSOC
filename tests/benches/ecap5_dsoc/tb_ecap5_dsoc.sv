@@ -39,7 +39,14 @@ module tb_ecap5_dsoc (
   //    Buttons interface
 
   input logic button0_i,
-  input logic button1_i
+  input logic button1_i,
+
+  //=================================
+  //    SPI interface
+
+  output logic flash_cs_n,
+  output logic flash_mosi_o,
+  input  logic flash_miso_i
 );
 
 ecap5_dsoc dut (
@@ -53,6 +60,10 @@ ecap5_dsoc dut (
 
   .button0_i (button0_i),
   .button1_i (button1_i),
+
+  .flash_cs_n (flash_cs_n),
+  .flash_mosi_o (flash_mosi_o),
+  .flash_miso_i (flash_miso_i),
 
   .sram_ce_n (),
   .sdram0_cs_n (),

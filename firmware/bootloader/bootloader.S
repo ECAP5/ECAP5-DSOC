@@ -19,30 +19,61 @@
 # You should have received a copy of the GNU General Public License
 # along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
 
-# Bench parent directory
-set(BENCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/benches/)
-# C++ bench include directory
-set(TEST_INCLUDE_DIRS ${ecap5_ecap5_dtestlib_SOURCE_DIR}/include)
-# Bench CSV output directory
-set(TESTDATA_DIR ${CMAKE_CURRENT_BINARY_DIR}/)
+.section .text
+.global _start
+_start:
+  call configure_uart
+  call configure_spi
+  call enable_cs
+  
+  la   a0, boot_str
+  call send_string
 
-# Lint
-add_lint_target(
-  TARGET lint
-  LIB    ecap5_dsoc
-)
+  la   a0, readingflash_str
+  call send_string
 
-# Add testbenches
-add_testbench(
-  MODULE            ecap5_dsoc
-  LIBS              ecap5_dsoc
-  BENCH_DIR         ${BENCH_DIR}
-  TESTDATA_DIR      ${TESTDATA_DIR}
-  TEST_INCLUDE_DIRS ${TEST_INCLUDE_DIRS}
-  DEPENDS           bootloader
-  DEFINES           BOOTLOADER_PATH=\\\"${CMAKE_BINARY_DIR}/firmware/bootloader.load\\\"
-)
+  li   a0, 0x9F
+  call send_spi
 
-# Main targets
-add_custom_target(build DEPENDS ${TEST_BINARIES})
-add_custom_target(tests DEPENDS ${TEST_TARGETS})
+  li   a0, 0x00
+  call send_spi
+  mv   s0, a0
+
+  li   a0, 0x00
+  call send_spi
+  mv   s1, a0
+
+  li   a0, 0x00
+  call send_spi
+  mv   s2, a0
+
+  la   a0, mfid_str
+  call send_string
+  
+  mv   a0, s0
+  call send_hex
+
+  la   a0, type_str
+  call send_string
+  
+  mv   a0, s1
+  call send_hex
+
+  la   a0, size_str
+  call send_string
+  
+  mv   a0, s2
+  call send_hex
+
+  call disable_cs
+
+_loop:
+  j  _loop
+
+.align 4
+
+boot_str:         .asciz "\n\nBooting..."
+readingflash_str: .asciz "\nReading flash..."
+mfid_str:         .asciz "\nManufacturer ID : "
+type_str:        .asciz "\nType : "
+size_str:        .asciz "\nSize : "

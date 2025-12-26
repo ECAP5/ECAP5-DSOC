@@ -19,16 +19,16 @@
 
 # Flash
 
-# LOCATE COMP "flash_cs_n"  SITE "AJ3";
+ LOCATE COMP "flash_cs_n"  SITE "AJ3";
 # The flash clk is accessed through a custom primitive
-# LOCATE COMP "flash_io[0]" SITE "AK2";
-# LOCATE COMP "flash_io[1]" SITE "AJ2";
+ LOCATE COMP "flash_mosi_o" SITE "AK2";
+ LOCATE COMP "flash_miso_i" SITE "AJ2";
 # LOCATE COMP "flash_io[2]" SITE "AM2";
 # LOCATE COMP "flash_io[3]" SITE "AL1";
 #
-# PORT        "flash_cs_n"  IO_TYPE=LVCMOS33;
-# PORT        "flash_io[0]" IO_TYPE=LVCMOS33;
-# PORT        "flash_io[1]" IO_TYPE=LVCMOS33;
+ PORT        "flash_cs_n"  IO_TYPE=LVCMOS33;
+ PORT        "flash_mosi_o" IO_TYPE=LVCMOS33;
+ PORT        "flash_miso_i" IO_TYPE=LVCMOS33;
 # PORT        "flash_io[2]" IO_TYPE=LVCMOS33;
 # PORT        "flash_io[3]" IO_TYPE=LVCMOS33;
 
