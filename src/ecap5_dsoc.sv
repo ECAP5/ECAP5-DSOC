@@ -41,6 +41,16 @@ module ecap5_dsoc (
   input logic button0_i,
   input logic button1_i,
 
+  //=================================
+  //    SPI interface
+
+  output logic flash_cs_n,
+  output logic flash_mosi_o,
+  input  logic flash_miso_i,
+
+  //=================================
+  //    Unused peripheral control signals 
+
   output logic sram_ce_n,
   output logic sdram0_cs_n,
   output logic sdram0_cke,
@@ -98,6 +108,21 @@ logic        timer_wb_ack_o;
 logic        timer_wb_cyc_i;
 logic        timer_wb_stall_o;
 
+// flash slave memory bus
+logic[31:0]  flash_wb_adr_i;
+logic[31:0]  flash_wb_dat_o;
+logic[31:0]  flash_wb_dat_i;
+logic        flash_wb_we_i;
+logic[3:0]   flash_wb_sel_i;
+logic        flash_wb_stb_i;
+logic        flash_wb_ack_o;
+logic        flash_wb_cyc_i;
+logic        flash_wb_stall_o;
+
+// flash chip select
+logic        flash_clk;
+logic        flash_cs;
+
 poweron_reset por_inst (
   .clk_i (clk_i),
   .rst_o (por_rst)
@@ -139,6 +164,7 @@ ecap5_dwbuart uart_inst (
 );
 
 ecap5_dwbmem_bram #(
+  .SIZE (106496), // 208 DP16K
   .ENABLE_PRELOADING (1),
   .PRELOAD_HEX_PATH (`BOOTLOADER_PATH)
 ) bram_inst (
@@ -173,6 +199,35 @@ ecap5_dwbtimer #(
   .wb_stall_o (timer_wb_stall_o)
 );
 
+ecap5_dwbspi #(
+) flash_inst (
+  .clk_i (clk_i),
+  .rst_i (por_rst),
+
+  .wb_adr_i   (flash_wb_adr_i),
+  .wb_dat_o   (flash_wb_dat_o),
+  .wb_dat_i   (flash_wb_dat_i),
+  .wb_sel_i   (flash_wb_sel_i),
+  .wb_we_i    (flash_wb_we_i),
+  .wb_stb_i   (flash_wb_stb_i),
+  .wb_ack_o   (flash_wb_ack_o),
+  .wb_cyc_i   (flash_wb_cyc_i),
+  .wb_stall_o (flash_wb_stall_o),
+
+  .spi_cs_o   (flash_cs),
+  .spi_clk_o  (flash_clk),
+  .spi_mosi_o (flash_mosi_o),
+  .spi_miso_i (flash_miso_i)
+);
+
+// Flash SPI clock mux
+`ifndef VERILATOR
+  USRMCLK flash_clk_inst (
+    .USRMCLKI(flash_clk),
+    .USRMCLKTS(1'b0)
+  );
+`endif
+
 always_comb begin : memory_mapping
   bram_wb_cyc_i = '0;
   bram_wb_adr_i = '0;
@@ -180,34 +235,44 @@ always_comb begin : memory_mapping
   uart_wb_adr_i = '0;
   timer_wb_cyc_i = '0;
   timer_wb_adr_i = '0;
+  flash_wb_cyc_i = '0;
+  flash_wb_adr_i = '0;
   core_wb_dat_i = '0;
   core_wb_ack_i = '0;
   core_wb_stall_i = '0;
 
-  // 00000000 -> 00003FFF = BRAM
-  // 00004000 -> 00007FFF = UART
-  // 00008000 -> 0000FFFF = TIMER
-  case(core_wb_adr_o[15:14])
+  // 00000000 -> 3FFFFFFF = BRAM
+  // 40000000 -> 7FFFFFFF = UART
+  // 80000000 -> BFFFFFFF = TIMER
+  // C0000000 -> FFFFFFFF = FLASH
+  case(core_wb_adr_o[31:30])
     2'h0: begin
       bram_wb_cyc_i = core_wb_cyc_o;
-      bram_wb_adr_i = core_wb_adr_o;
+      bram_wb_adr_i = {2'b0, core_wb_adr_o[29:0]};
       core_wb_dat_i = bram_wb_dat_o;
       core_wb_ack_i = bram_wb_ack_o;
       core_wb_stall_i = bram_wb_stall_o;
     end
     2'h1: begin
       uart_wb_cyc_i = core_wb_cyc_o;
-      uart_wb_adr_i = {18'b0, core_wb_adr_o[13:0]};
+      uart_wb_adr_i = {2'b0, core_wb_adr_o[29:0]};
       core_wb_dat_i = uart_wb_dat_o;
       core_wb_ack_i = uart_wb_ack_o;
       core_wb_stall_i = uart_wb_stall_o;
     end
     2'h2: begin
       timer_wb_cyc_i = core_wb_cyc_o;
-      timer_wb_adr_i = {18'b0, core_wb_adr_o[13:0]};
+      timer_wb_adr_i = {2'b0, core_wb_adr_o[29:0]};
       core_wb_dat_i = timer_wb_dat_o;
       core_wb_ack_i = timer_wb_ack_o;
       core_wb_stall_i = timer_wb_stall_o;
+    end
+    2'h3: begin
+      flash_wb_cyc_i = core_wb_cyc_o;
+      flash_wb_adr_i = {2'b0, core_wb_adr_o[29:0]};
+      core_wb_dat_i = flash_wb_dat_o;
+      core_wb_ack_i = flash_wb_ack_o;
+      core_wb_stall_i = flash_wb_stall_o;
     end
     default: begin end
   endcase
@@ -226,9 +291,14 @@ always_comb begin : memory_mapping
   timer_wb_sel_i = core_wb_sel_o;
   timer_wb_we_i = core_wb_we_o;
   timer_wb_stb_i = core_wb_stb_o;
+
+  flash_wb_dat_i = core_wb_dat_o;
+  flash_wb_sel_i = core_wb_sel_o;
+  flash_wb_we_i = core_wb_we_o;
+  flash_wb_stb_i = core_wb_stb_o;
 end
 
-// TODO: add GPIO peripheral for LED/button interface
+assign flash_cs_n = ~flash_cs;
 
 assign sram_ce_n = 1;
 assign sdram0_cs_n = 1;

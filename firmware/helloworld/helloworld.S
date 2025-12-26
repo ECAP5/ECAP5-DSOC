@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
 
-.equ UART_BASE, 0x4000
+.equ UART_BASE, 0x40000000
 
 .equ UART_SR, 0x0
 .equ UART_CR, 0x4
@@ -33,7 +33,7 @@
 .equ UART_ACC_INCR, 26
 .equ UART_DS, 1
 
-.equ TIMER_BASE, 0x8000
+.equ TIMER_BASE, 0x80000000
 .equ TIMER_TIMEBASE_LOW, 0x0
 .equ TIMER_TIMEBASE_HIGH, 0x1
 
