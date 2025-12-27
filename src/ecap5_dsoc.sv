@@ -134,7 +134,8 @@ generated_pll pll_inst (
 );
 
 ecap5_dproc #(
-  .BOOT_ADDRESS (32'h0)
+  // last 4K region for boot
+  .BOOT_ADDRESS (32'h19800) 
 ) core_inst (
   .clk_i (clk),
   .rst_i (rst),

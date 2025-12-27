@@ -110,8 +110,8 @@ _check_send_done:
   beq   t1, x0, _check_send_done
 
 _read_response:
-  lb    a0, SPI_RXDR(t4)
-  andi  a0, a0, 0xFF
+  mv    a0, x0
+  lbu   a0, SPI_RXDR(t4)
   
   ret
 
