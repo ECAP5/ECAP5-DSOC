@@ -56,8 +56,7 @@ add_custom_command(
 
 add_custom_target(helloworld DEPENDS helloworld.dump helloworld.load)
 
-
-add_executable(bootloader.elf ${CMAKE_CURRENT_LIST_DIR}/bootloader/bootloader.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/uart.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/spi.S)
+add_executable(bootloader.elf ${CMAKE_CURRENT_LIST_DIR}/bootloader/bootloader.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/uart.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/spi.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/flash.S ${CMAKE_CURRENT_LIST_DIR}/bootloader/elf.S)
 set_target_properties(bootloader.elf PROPERTIES COMPILE_FLAGS "${CC_OPTS} -march=rv32g -mabi=ilp32"
   LINK_FLAGS    "${CC_OPTS} -march=rv32g -mabi=ilp32 -T${CMAKE_CURRENT_LIST_DIR}/link.ld")
 

@@ -21,20 +21,33 @@
  */
 
 OUTPUT_ARCH( "riscv" )
-ENTRY(_start)
+ENTRY(main)
 MEMORY
 {
   RAM (rwx) : ORIGIN = 0x0, LENGTH = 0x1A000
-  BOOT (rwx) : ORIGIN = 0x1A000-2K, LENGTH = 2K
+  /* the flash is not memory mapped, but giving it an address
+   * will help determine what needs to be loaded in ram */
+  FLASH (r) : ORIGIN = 0x10000000, LENGTH = 0xD00000
 }
 SECTIONS
 {
   .text : { 
     *(.text) 
-  } > BOOT
+  } > RAM AT > FLASH
+
+  .rodata : {
+    *(.rodata)
+  } > RAM AT > FLASH
+
+  .data : {
+    *(.data)
+    *(.sdata)
+  } > RAM AT > FLASH
+
+  .bss : {
+    *(.bss)
+    *(.sbss)
+  } > RAM AT > FLASH
+
+  _stack_top = ORIGIN(RAM) + LENGTH(RAM);
 }
-
-__BOOT_STACK_TOP__ = ORIGIN(BOOT) + LENGTH(BOOT);
-
-__RAM_START__ = ORIGIN(RAM);
-__RAM_END__ = ORIGIN(RAM) + LENGTH(RAM);

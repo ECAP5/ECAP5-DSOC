@@ -30,7 +30,7 @@
 .equ UART_DS_MASK, (1 << 3)
 .equ UART_TXE_MASK, (1 << 1)
 
-.equ UART_ACC_INCR, 10
+.equ UART_ACC_INCR, 97
 .equ UART_DS, 1
 
 .section .text
@@ -74,7 +74,7 @@ _check_send_ready_string:
 
 _send_char:
   # Load the char to send
-  lb    t0, 0(t5)
+  lbu   t0, 0(t5)
 
   # If the string is fully sent return
   beq   t0, x0, _return_send_string

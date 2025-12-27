@@ -20,21 +20,35 @@
  * along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-OUTPUT_ARCH( "riscv" )
-ENTRY(_start)
-MEMORY
-{
-  RAM (rwx) : ORIGIN = 0x0, LENGTH = 0x1A000
-  BOOT (rwx) : ORIGIN = 0x1A000-2K, LENGTH = 2K
-}
-SECTIONS
-{
-  .text : { 
-    *(.text) 
-  } > BOOT
+#include <stddef.h>
+#include <stdint.h>
+
+#define UART_BASE 0x40000000
+#define UART_SR_TXE_MASK (1 << 1)
+
+typedef struct {
+  volatile uint32_t sr;
+  volatile uint32_t cr;
+  volatile uint32_t rxdr;
+  volatile uint32_t txdr;
+} uart_regs_t;
+
+void send_string(char * str) {
+  uart_regs_t * uart = (uart_regs_t *)UART_BASE;
+
+  char * c = str;
+  while(*c != '\0') {
+    // Wait for the uart to be ready
+    while(!(uart->sr & UART_SR_TXE_MASK)) {}
+    
+    uart->txdr = *c;
+
+    c += 1;
+  }
 }
 
-__BOOT_STACK_TOP__ = ORIGIN(BOOT) + LENGTH(BOOT);
+void main(void) {
+  send_string("Hello, World!\n"); 
 
-__RAM_START__ = ORIGIN(RAM);
-__RAM_END__ = ORIGIN(RAM) + LENGTH(RAM);
+  while(1);
+}
