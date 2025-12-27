@@ -20,8 +20,12 @@
  * along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+`ifndef CLK_FREQ
+  `define CLK_FREQ 24000000
+`endif
+
 module ecap5_dsoc (
-  input logic  clk_i,
+  input logic  ext_clk_i,
 
 //=================================
   //    UART interface
@@ -61,8 +65,8 @@ module ecap5_dsoc (
   output logic emmc_rst_n
 );
 
-// poweron-reset
-logic        por_rst;
+// PLL signals
+logic        clk, rst, pll_locked;
 
 // core master memory bus
 logic[31:0]  core_wb_adr_o;
@@ -123,16 +127,17 @@ logic        flash_wb_stall_o;
 logic        flash_clk;
 logic        flash_cs;
 
-poweron_reset por_inst (
-  .clk_i (clk_i),
-  .rst_o (por_rst)
+generated_pll pll_inst (
+  .clkin   (ext_clk_i),
+  .clkout0  (clk),
+  .locked   (pll_locked)
 );
 
 ecap5_dproc #(
   .BOOT_ADDRESS (32'h0)
 ) core_inst (
-  .clk_i (clk_i),
-  .rst_i (por_rst),
+  .clk_i (clk),
+  .rst_i (rst),
 
   .wb_adr_o   (core_wb_adr_o),
   .wb_dat_i   (core_wb_dat_i),
@@ -146,8 +151,8 @@ ecap5_dproc #(
 );
 
 ecap5_dwbuart uart_inst (
-  .clk_i (clk_i),
-  .rst_i (por_rst),
+  .clk_i (clk),
+  .rst_i (rst),
 
   .wb_adr_i   (uart_wb_adr_i),
   .wb_dat_o   (uart_wb_dat_o),
@@ -168,8 +173,8 @@ ecap5_dwbmem_bram #(
   .ENABLE_PRELOADING (1),
   .PRELOAD_HEX_PATH (`BOOTLOADER_PATH)
 ) bram_inst (
-  .clk_i (clk_i),
-  .rst_i (por_rst),
+  .clk_i (clk),
+  .rst_i (rst),
 
   .wb_adr_i   (bram_wb_adr_i),
   .wb_dat_o   (bram_wb_dat_o),
@@ -183,10 +188,10 @@ ecap5_dwbmem_bram #(
 );
 
 ecap5_dwbtimer #(
-  .CLK_FREQ (24000000)
+  .CLK_FREQ (`CLK_FREQ)
 ) timer_inst (
-  .clk_i (clk_i),
-  .rst_i (por_rst),
+  .clk_i (clk),
+  .rst_i (rst),
 
   .wb_adr_i   (timer_wb_adr_i),
   .wb_dat_o   (timer_wb_dat_o),
@@ -201,8 +206,8 @@ ecap5_dwbtimer #(
 
 ecap5_dwbspi #(
 ) flash_inst (
-  .clk_i (clk_i),
-  .rst_i (por_rst),
+  .clk_i (clk),
+  .rst_i (rst),
 
   .wb_adr_i   (flash_wb_adr_i),
   .wb_dat_o   (flash_wb_dat_o),
@@ -298,7 +303,9 @@ always_comb begin : memory_mapping
   flash_wb_stb_i = core_wb_stb_o;
 end
 
-assign flash_cs_n = ~flash_cs;
+assign rst = !pll_locked;
+
+assign flash_cs_n = !flash_cs;
 
 assign sram_ce_n = 1;
 assign sdram0_cs_n = 1;

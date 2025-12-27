@@ -4,10 +4,10 @@
 
 # Oscillator input
 
- LOCATE COMP    "clk_i" SITE "P5";
+ LOCATE COMP    "ext_clk_i" SITE "P5";
 
- PORT           "clk_i" IO_TYPE=LVCMOS33;
- FREQUENCY PORT "clk_i" 24 MHZ;
+ PORT           "ext_clk_i" IO_TYPE=LVCMOS33;
+ FREQUENCY PORT "ext_clk_i" 24 MHZ;
 
 # Power monitoring - SPI
 

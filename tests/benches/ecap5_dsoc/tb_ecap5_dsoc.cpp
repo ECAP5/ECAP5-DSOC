@@ -62,13 +62,15 @@ int main(int argc, char ** argv, char ** env) {
   tb->init_conditions(__CondIdEnd);
   tb->debug_log = true;
 
-  // 24MHz
-  tb->clk_period_in_ps = 41667;
+  // 60MHz
+  tb->clk_ptr = &tb->core->ext_clk_i;
+  tb->clk_period_in_ps = 16667;
 
   /************************************************************/
 
   tb->reset();
-  tb->n_tick(200000);
+  // 10ms
+  tb->n_tick(600000);
 
   /************************************************************/
 
