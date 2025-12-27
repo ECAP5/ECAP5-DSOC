@@ -19,6 +19,25 @@
 # You should have received a copy of the GNU General Public License
 # along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
 
-add_subdirectory(benches)
-add_subdirectory(programs)
+set(CROSS_COMPILE riscv64-unknown-elf-)
+set(CMAKE_ASM_COMPILER ${CROSS_COMPILE}gcc)
+set(CMAKE_AR ${CROSS_COMPILE}ar)
+set(CMAKE_ASM_COMPILER ${CROSS_COMPILE}gcc)
+set(CMAKE_C_COMPILER ${CROSS_COMPILE}gcc)
+set(CMAKE_CXX_COMPILER ${CROSS_COMPILE}g++)
 
+enable_language(ASM)
+
+set(CC_OPTS "-static \
+            -mcmodel=medany \
+            -fvisibility=hidden \
+            -nostdlib \
+            -nostartfiles")
+
+set(SOURCES ${CMAKE_CURRENT_LIST_DIR}/main.c)
+set(LD_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/link.ld)
+
+add_executable(main.elf ${SOURCES})
+set_target_properties(main.elf 
+  PROPERTIES COMPILE_FLAGS "${CC_OPTS} -march=rv32g -mabi=ilp32"
+  LINK_FLAGS "${CC_OPTS} -march=rv32g -mabi=ilp32 -T${LD_SCRIPT}")

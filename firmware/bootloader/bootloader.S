@@ -19,61 +19,60 @@
 # You should have received a copy of the GNU General Public License
 # along with ECAP5-DSOC.  If not, see <http://www.gnu.org/licenses/>.
 
+.equ FLASH_MFID,     0xEF
+.equ FLASH_DEVTYPE,  0x40
+.equ FLASH_SIZE,     0x18
+
+.equ EXE_ADDR, 0x300000
+
 .section .text
 .global _start
 _start:
+  la   sp, __BOOT_STACK_TOP__
+
   call configure_uart
   call configure_spi
-  call enable_cs
+
+  # Checking the flash ID
+  li   a0, FLASH_MFID
+  li   a1, FLASH_DEVTYPE
+  li   a2, FLASH_SIZE
+  call check_flash_id
+  bne  a0, x0, _booterr
+
+  # Checking ELF 
+  li   a0, EXE_ADDR
+  call check_elf_type
+  bne  a0, x0, _booterr
+
+  # Loading ELF in RAM
+  li   a0, EXE_ADDR
+  call load_elf_in_ram
+
+  # Get the ELF entry point
+  la   a0, EXE_ADDR
+  call get_elf_entry
+
+  # Move the entry to ra
+  mv   ra, a0
+
+  # Set the stack pointer
+  la   sp, __RAM_END__
+
+  # Clear registers (except x0, ra and sp)
+  .irp r, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    mv x\r, x0
+  .endr
   
-  la   a0, boot_str
+  # Jump to ra
+  ret
+
+_booterr:
+  la   a0, bootfail_str 
   call send_string
-
-  la   a0, readingflash_str
-  call send_string
-
-  li   a0, 0x9F
-  call send_spi
-
-  li   a0, 0x00
-  call send_spi
-  mv   s0, a0
-
-  li   a0, 0x00
-  call send_spi
-  mv   s1, a0
-
-  li   a0, 0x00
-  call send_spi
-  mv   s2, a0
-
-  la   a0, mfid_str
-  call send_string
-  
-  mv   a0, s0
-  call send_hex
-
-  la   a0, type_str
-  call send_string
-  
-  mv   a0, s1
-  call send_hex
-
-  la   a0, size_str
-  call send_string
-  
-  mv   a0, s2
-  call send_hex
-
-  call disable_cs
-
-_loop:
+_loop: 
   j  _loop
 
 .align 4
 
-boot_str:         .asciz "\n\nBooting..."
-readingflash_str: .asciz "\nReading flash..."
-mfid_str:         .asciz "\nManufacturer ID : "
-type_str:        .asciz "\nType : "
-size_str:        .asciz "\nSize : "
+bootfail_str: .asciz "\n[BOOT] FAIL\n"
