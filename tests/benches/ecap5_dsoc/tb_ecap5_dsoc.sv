@@ -21,7 +21,7 @@
  */
 
 module tb_ecap5_dsoc (
-  input logic  clk_i,
+  input logic  ext_clk_i,
 
 //=================================
   //    UART interface
@@ -50,7 +50,7 @@ module tb_ecap5_dsoc (
 );
 
 ecap5_dsoc dut (
-  .clk_i (clk_i),
+  .ext_clk_i (ext_clk_i),
 
   .uart_tx_o (uart_tx_o),
   .uart_rx_i (uart_rx_i),
