@@ -83,11 +83,10 @@ add_dependency(
   GIT ecap5/ecap5-dwbspi
   TAG release/v1.0.0)
 
-# Define an interface library
+# Define an interface library for the sources
 add_library(ecap5_dsoc INTERFACE)
 target_sources(ecap5_dsoc INTERFACE
   ${CMAKE_CURRENT_LIST_DIR}/src/ecap5_dsoc.sv
-  ${CMAKE_CURRENT_LIST_DIR}/src/poweron_reset.sv
 )
 target_link_libraries(ecap5_dsoc INTERFACE
   ecap5_dproc
@@ -113,15 +112,31 @@ if(PROJECT_IS_TOP_LEVEL)
   add_subdirectory(firmware)
   add_subdirectory(tests)
 
+  # Define an interface library for the bitstream generation
+  add_library(ecap5_dsoc_bitstream INTERFACE)
+  target_sources(ecap5_dsoc_bitstream INTERFACE
+    ${CMAKE_BINARY_DIR}/generated_pll.v
+  )
+  target_link_libraries(ecap5_dsoc_bitstream INTERFACE
+    ecap5_dsoc
+  )
+
   # Bitstream generation
 
+  set(CLOCK_FREQUENCY 60)
+  add_ecp5_pll_generation(
+    INPUT_FREQ 24
+    OUTPUT_FREQ ${CLOCK_FREQUENCY}
+    MODULE_NAME generated_pll)
+
   add_synthesis_target(
-    LIB        ecap5_dsoc
+    LIB        ecap5_dsoc_bitstream
     TOP_MODULE ecap5_dsoc
     TARGET_FPGA ecp5
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json
-    DEPENDS bootloader
-    DEFINES BOOTLOADER_PATH=\\\"${CMAKE_CURRENT_BINARY_DIR}/firmware/bootloader.load\\\")
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated_pll.v bootloader
+    DEFINES BOOTLOADER_PATH=\\\"${CMAKE_CURRENT_BINARY_DIR}/firmware/bootloader.load\\\"
+            CLK_FREQ=${CLOCK_FREQUENCY}000000)
 
   add_place_and_route_target(
     INPUT ${CMAKE_CURRENT_BINARY_DIR}/synth.json

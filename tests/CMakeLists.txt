@@ -32,10 +32,36 @@ add_lint_target(
   LIB    ecap5_dsoc
 )
 
+# Generate a mocked pll
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/generated_pll.v
+    "module generated_pll(\n"
+    "    input clkin,\n"
+    "    output clkout0,\n"
+    "    output locked\n"
+    ");\n"
+    "logic locked_q = 1'b0;\n"
+    "logic locked_qq;\n"
+    "always_ff @(posedge clkin) begin\n"
+    "  locked_q <= 1;\n"
+    "  locked_qq <= locked_q;\n"
+    "end\n"
+    "assign clkout0 = clkin;\n"
+    "assign locked = locked_qq;\n"
+    "endmodule\n"
+)
+# Create a test interface library
+add_library(ecap5_dsoc_tests INTERFACE)
+target_sources(ecap5_dsoc_tests INTERFACE
+  ${CMAKE_CURRENT_BINARY_DIR}/generated_pll.v
+)
+target_link_libraries(ecap5_dsoc_tests INTERFACE
+  ecap5_dsoc
+)
+
 # Add testbenches
 add_testbench(
   MODULE            ecap5_dsoc
-  LIBS              ecap5_dsoc
+  LIBS              ecap5_dsoc_tests
   BENCH_DIR         ${BENCH_DIR}
   TESTDATA_DIR      ${TESTDATA_DIR}
   TEST_INCLUDE_DIRS ${TEST_INCLUDE_DIRS}
