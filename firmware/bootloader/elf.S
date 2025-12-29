@@ -175,6 +175,15 @@ _read_segment:
   blt  t0, t2, _segment_not_in_ram
   bgt  t1, t3, _segment_not_in_ram
 
+  # Error if trying to overwrite bootloader
+  la   t2, __BOOT_START__
+  bge  t0, t2, _bootloader_overwrite
+  bgt  t1, t2, _bootloader_overwrite
+
+  # Skip the copy if the segment file size is zero
+  lw   t0, 0x10(sp)
+  beq  t0, x0, _skip_copy
+
   # Copy the segment data in RAM
   lw   a0, 0x4(sp)  # p_offset
   add  a0, a0, s0   # base + p_offset
@@ -182,6 +191,7 @@ _read_segment:
   lw   a2, 0x10(sp) # p_filesz
   call copy_flash_to_ram
 
+_skip_copy:
   # Check if addresses need to be cleared
   lw   t0, 0x14(sp) # p_memsz
   lw   t1, 0x10(sp) # p_filesz
@@ -222,6 +232,18 @@ _next_segment:
   # Check if last segment
   bne  s1, x0, _read_segment
 
+  # Load the return value
+  mv   a0, x0
+
+  j    _load_elf_in_ram_ret
+
+_bootloader_overwrite:
+  la   a0, bootoverwrite_str
+  call send_string
+  
+  # Load the return value
+  li   a0, 1
+
 _load_elf_in_ram_ret:
   lw   ra, 60(sp)
   lw   s0, 56(sp)
@@ -244,7 +266,7 @@ get_elf_entry:
   # Get the entry field
   addi a0, a0, ELF_ENTRY_OFFSET # base + e_entry
   mv   a1, sp
-  li   a2, 1
+  li   a2, 4
   call copy_flash_to_ram
   
   # Set the return value
@@ -260,4 +282,5 @@ elf_magic: .byte 0x7F, 'E', 'L', 'F'
 bad_magic_str: .asciz "\n[BOOT] BAD MAGIC "
 bad_class_str: .asciz "\n[BOOT] BAD CLASS "
 bad_machine_str: .asciz "\n[BOOT] BAD MACHINE "
-segnotinram_str: .asciz "\n[BOOT] WARN segment not in RAM "
+segnotinram_str: .asciz "\n[BOOT] WARN SEGMENT NOT IN RAM "
+bootoverwrite_str: .asciz "\n[BOOT] ERROR BOOT OVERWRITE "
