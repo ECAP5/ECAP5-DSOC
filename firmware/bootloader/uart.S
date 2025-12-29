@@ -30,7 +30,7 @@
 .equ UART_DS_MASK, (1 << 3)
 .equ UART_TXE_MASK, (1 << 1)
 
-.equ UART_ACC_INCR, 105
+.equ UART_ACC_INCR, 111
 .equ UART_DS, 1
 
 .section .text

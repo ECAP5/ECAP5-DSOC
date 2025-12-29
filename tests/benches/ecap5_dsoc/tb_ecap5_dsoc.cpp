@@ -70,7 +70,7 @@ int main(int argc, char ** argv, char ** env) {
 
   tb->reset();
   // 1ms
-  tb->n_tick(600000);
+  tb->n_tick(60000);
 
   /************************************************************/
 
