@@ -48,6 +48,7 @@ _start:
   # Loading ELF in RAM
   li   a0, EXE_ADDR
   call load_elf_in_ram
+  bne  a0, x0, _booterr
 
   # Get the ELF entry point
   la   a0, EXE_ADDR
@@ -76,3 +77,4 @@ _loop:
 .align 4
 
 bootfail_str: .asciz "\n[BOOT] FAIL\n"
+pon_str: .asciz "\n[BOOT] FAIL\n"
