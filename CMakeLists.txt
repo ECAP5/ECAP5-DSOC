@@ -123,7 +123,7 @@ if(PROJECT_IS_TOP_LEVEL)
 
   # Bitstream generation
 
-  set(CLOCK_FREQUENCY 78)
+  set(CLOCK_FREQUENCY 72)
   add_ecp5_pll_generation(
     INPUT_FREQ 24
     OUTPUT_FREQ ${CLOCK_FREQUENCY}
