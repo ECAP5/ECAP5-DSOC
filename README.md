@@ -12,6 +12,14 @@
   </p>
 </div>
 
+## How to use the bootloader
+
+The bootloader reads the `.elf` header located at `0x300000` in flash. In order for it to load a program, the program shall be placed at that address using the following command :
+
+```bash
+ecpprog -o 3M <binary>.elf -p
+```
+
 <!-- LICENSE -->
 ## License
 
