@@ -48,40 +48,40 @@ add_dependency(
 
 add_dependency(
   GIT ecap5/verilator-cmake
-  TAG release/v1.1.0)
+  TAG tags/v1.1.0)
 
 add_dependency(
   GIT ecap5/ecap5-treq
-  TAG release/v3.0.0
+  TAG tags/v3.0.0
   BINARY ecap5-treq)
 
 add_dependency(
   GIT ecap5/oss-cad-suite-cmake
-  TAG release/v2.0.0)
+  TAG tags/v2.0.0)
 
 add_dependency(
   GIT ecap5/ecap5-dtestlib
-  TAG release/v1.1.0)
+  TAG tags/v1.1.0)
 
 add_dependency(
   GIT ecap5/ecap5-dproc
-  TAG release/v1.0.0-alpha2)
+  TAG tags/v1.0.0-alpha2)
 
 add_dependency(
   GIT ecap5/ecap5-dwbuart
-  TAG release/v2.0.0)
+  TAG tags/v2.0.0-beta1)
 
 add_dependency(
   GIT ecap5/ecap5-dwbmem-bram
-  TAG release/v1.0.0)
+  TAG tags/v1.0.0-beta1)
 
 add_dependency(
   GIT ecap5/ecap5-dwbtimer
-  TAG release/v1.0.0)
+  TAG tags/v1.0.0-beta1)
 
 add_dependency(
   GIT ecap5/ecap5-dwbspi
-  TAG release/v1.0.0)
+  TAG tags/v1.0.0-beta1)
 
 # Define an interface library for the sources
 add_library(ecap5_dsoc INTERFACE)
