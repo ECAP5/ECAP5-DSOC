@@ -1,3 +1,8 @@
+<p float="left">
+<a href="https://ecap5.github.io/ECAP5-DSOC/report.html"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fcchaine%2F9e5dd2096835bc1230f8a6e787f9f7a7%2Fraw%2Ftest-result-badge.json?"/></a>
+<a href="https://ecap5.github.io/ECAP5-DSOC/report.html"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fcchaine%2F9e5dd2096835bc1230f8a6e787f9f7a7%2Fraw%2Ftraceability-result-badge.json?"/></a>
+</p>
+
 <br />
 <div align="center">
     <img src="docs/src/assets/logo-rounded.svg" alt="Logo" width="80" height="80">
